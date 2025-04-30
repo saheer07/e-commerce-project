@@ -1,0 +1,233 @@
+[
+    {
+      "id": 1,
+      "name": "XXR Model 571 Wheels",
+      "price": 22.804,
+      "category": "Automotive",
+      "brand": "AutoMax",
+      "color": "Black",
+      "material": "Aluminum Alloy",
+      "stock": 10,
+      "image": "https://www.ubuy.co.in/productimg/?image=aHR0cHM6Ly9pbWFnZXMtY2RuLnVidXkuY28uaW4vNjcxOWJlNWVlNzM3NzgyMDk4N2I3NDE2LXh4ci01NzEtMTh4OC01LTV4MTE0LTMtMzVldC1jaHJvbWl1bS5qcGc.jpg",
+      "reviews": [
+        {
+          "user": "Vishnu P.",
+          "rating": 5,
+          "comment": "Perfect upgrade for my car. High-quality and durable."
+        },
+        {
+          "user": "Shyam M.",
+          "rating": 4,
+          "comment": "Good quality wheels, slightly expensive though."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Alloy Wheels - 16 inch",
+      "price": 249.99,
+      "category": "Automotive",
+      "brand": "WheelTech",
+      "color": "Gunmetal",
+      "material": "Aluminum Alloy",
+      "stock": 15,
+      "image": "/images/alloy_wheels_16inch.png",
+      "reviews": [
+        {
+          "user": "Anu R.",
+          "rating": 4,
+          "comment": "Great product, loved the color and finish."
+        },
+        {
+          "user": "Raj K.",
+          "rating": 5,
+          "comment": "Perfect fit for my car, great design."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Alloy Wheels - 20 inch",
+      "price": 449.99,
+      "category": "Automotive",
+      "brand": "SpeedRim",
+      "color": "Black",
+      "material": "Aluminum Alloy",
+      "stock": 5,
+      "image": "/images/alloy_wheels_20inch.png",
+      "reviews": [
+        {
+          "user": "Deepak A.",
+          "rating": 5,
+          "comment": "Love the bold look! Totally worth the price."
+        },
+        {
+          "user": "Neha S.",
+          "rating": 4,
+          "comment": "Expensive but looks stunning on my SUV."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Alloy Wheels - 17 inch",
+      "price": 329.99,
+      "category": "Automotive",
+      "brand": "WheelMaster",
+      "color": "Chrome",
+      "material": "Aluminum Alloy",
+      "stock": 12,
+      "image": "/images/alloy_wheels_17inch.png",
+      "reviews": [
+        {
+          "user": "Amit J.",
+          "rating": 5,
+          "comment": "Solid build and very stylish, great value."
+        },
+        {
+          "user": "Priya L.",
+          "rating": 4,
+          "comment": "Look great, but a little too heavy for my taste."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Alloy Wheels - 15 inch",
+      "price": 199.99,
+      "category": "Automotive",
+      "brand": "AutoMax",
+      "color": "Silver",
+      "material": "Aluminum Alloy",
+      "stock": 20,
+      "image": "/images/alloy_wheels_15inch.png",
+      "reviews": [
+        {
+          "user": "Ravi K.",
+          "rating": 5,
+          "comment": "Perfect for compact cars, good quality."
+        },
+        {
+          "user": "Kiran P.",
+          "rating": 3,
+          "comment": "Decent, but the finish could be better."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Sport Alloy Wheels",
+      "price": 399.99,
+      "category": "Automotive",
+      "brand": "SportRim",
+      "color": "Matte Black",
+      "material": "Aluminum Alloy",
+      "stock": 8,
+      "image": "/images/sport_alloy_wheels.png",
+      "reviews": [
+        {
+          "user": "Vinod S.",
+          "rating": 5,
+          "comment": "Great performance wheels, highly recommend!"
+        },
+        {
+          "user": "Geethu M.",
+          "rating": 4,
+          "comment": "Amazing look, but a bit on the pricey side."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Alloy Wheels - 19 inch",
+      "price": 379.99,
+      "category": "Automotive",
+      "brand": "MaxRim",
+      "color": "Silver",
+      "material": "Aluminum Alloy",
+      "stock": 6,
+      "image": "/images/alloy_wheels_19inch.png",
+      "reviews": [
+        {
+          "user": "Sandeep K.",
+          "rating": 5,
+          "comment": "Great upgrade for my sedan, the look is amazing!"
+        },
+        {
+          "user": "Jaya R.",
+          "rating": 4,
+          "comment": "Good product, but could be lighter."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Alloy Wheels - 21 inch",
+      "price": 499.99,
+      "category": "Automotive",
+      "brand": "AutoVision",
+      "color": "Dark Gray",
+      "material": "Aluminum Alloy",
+      "stock": 4,
+      "image": "/images/alloy_wheels_21inch.png",
+      "reviews": [
+        {
+          "user": "Sreejith M.",
+          "rating": 5,
+          "comment": "These wheels transformed the look of my car!"
+        },
+        {
+          "user": "Lakshmi N.",
+          "rating": 5,
+          "comment": "Very stylish, high quality, and great performance."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Off-road Alloy Wheels",
+      "price": 429.99,
+      "category": "Automotive",
+      "brand": "Adventure Wheels",
+      "color": "Black",
+      "material": "Aluminum Alloy",
+      "stock": 10,
+      "image": "/images/offroad_alloy_wheels.png",
+      "reviews": [
+        {
+          "user": "Ajith V.",
+          "rating": 5,
+          "comment": "Excellent off-road performance, worth the investment."
+        },
+        {
+          "user": "Karthik R.",
+          "rating": 4,
+          "comment": "Great for off-roading, but quite heavy."
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Luxury Alloy Wheels",
+      "price": 599.99,
+      "category": "Automotive",
+      "brand": "LuxRim",
+      "color": "Gold",
+      "material": "Aluminum Alloy",
+      "stock": 3,
+      "image": "/images/luxury_alloy_wheels.png",
+      "reviews": [
+        {
+          "user": "Nikhil S.",
+          "rating": 5,
+          "comment": "Absolutely stunning wheels, perfect for a luxury car."
+        },
+        {
+          "user": "Pooja B.",
+          "rating": 4,
+          "comment": "Looks great, but very expensive."
+        }
+      ]
+    }
+  ]
+  
