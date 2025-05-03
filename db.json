@@ -1,15 +1,22 @@
 {
+  "users": [
+    {
+      "id": 1,
+      "username": "fayis",
+      "password": "123456"
+    }
+  ],
   "products": [
     {
       "id": 1,
       "name": "XXR Model 571 Wheels",
       "price": 22.804,
-      "category": "Automotive",
+      "category": "Hatchback",
       "brand": "AutoMax",
       "color": "Black",
       "material": "Aluminum Alloy",
       "stock": 10,
-      "image": "https://www.ubuy.co.in/productimg/?image=aHR0cHM6Ly9pbWFnZXMtY2RuLnVidXkuY28uaW4vNjcxOWJlNWVlNzM3NzgyMDk4N2I3NDE2LXh4ci01NzEtMTh4OC01LTV4MTE0LTMtMzVldC1jaHJvbWl1bS5qcGc.jpg",
+      "image":  "https://images-cdn.ubuy.co.in/6719be5ee7377820987b7416-xxr-571-18x8-5-5x114-3-35et-chromium.jpg",
       "reviews": [
         {
           "user": "Vishnu P.",
@@ -25,14 +32,14 @@
     },
     {
       "id": 2,
-      "name": "Alloy Wheels - 16 inch",
+      "name": "XXR Model 575 Wheels",
       "price": 249.99,
-      "category": "Automotive",
+      "category": "Hatchback",
       "brand": "WheelTech",
-      "color": "Gunmetal",
+      "color": "Phantom Black",
       "material": "Aluminum Alloy",
       "stock": 15,
-      "image": "/images/alloy_wheels_16inch.png",
+      "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTn0Aaig8yXCYCh5iTKA4ZRb5L8_sBFRds-G6kpk_hqIt5UzvS_pEe-L-i1X6SQmswlmpjWSI5qACbEbE4dlqmW5pstfZ15VElwYA1ugNU",
       "reviews": [
         {
           "user": "Anu R.",
@@ -48,14 +55,14 @@
     },
     {
       "id": 3,
-      "name": "Alloy Wheels - 20 inch",
+      "name": "Fuel D827 Traction 1pc Custom Wheel ",
       "price": 449.99,
-      "category": "Automotive",
+      "category": "Truck",
       "brand": "SpeedRim",
-      "color": "Black",
+      "color": "Dark Blue With Black Ring Rim",
       "material": "Aluminum Alloy",
       "stock": 5,
-      "image": "/images/alloy_wheels_20inch.png",
+      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTubp9smMHtEpEqx5XpsqRcI-wyg1CCNRx7_fjr74GXe6QNxUkchvIn2QX4XOhPRKLuEUL4USW6wEj928ArBo9ELpAI6UQLsGgCzHnnphW2nqfJdyimm_xi",
       "reviews": [
         {
           "user": "Deepak A.",
@@ -71,14 +78,14 @@
     },
     {
       "id": 4,
-      "name": "Alloy Wheels - 17 inch",
+      "name": "Alloy Wheel Grey ",
       "price": 329.99,
-      "category": "Automotive",
+      "category": "Hatchback",
       "brand": "WheelMaster",
-      "color": "Chrome",
+      "color": "Ertiga",
       "material": "Aluminum Alloy",
       "stock": 12,
-      "image": "/images/alloy_wheels_17inch.png",
+      "image": "https://images-cdn.ubuy.co.in/6414086e0afdf436541a2c96-momo-wrva60539fi6-6x15-et39-4x98-alloy.jpg",
       "reviews": [
         {
           "user": "Amit J.",
@@ -96,12 +103,12 @@
       "id": 5,
       "name": "Alloy Wheels - 15 inch",
       "price": 199.99,
-      "category": "Automotive",
+      "category": "Hatchback",
       "brand": "AutoMax",
       "color": "Silver",
       "material": "Aluminum Alloy",
       "stock": 20,
-      "image": "/images/alloy_wheels_15inch.png",
+      "image": "https://images-cdn.ubuy.com.sa/64719e9413d24864b120b89e-strada-coda-custom-wheel-24x10-14.jpg",
       "reviews": [
         {
           "user": "Ravi K.",
@@ -114,22 +121,6 @@
           "comment": "Decent, but the finish could be better."
         }
       ]
-    },
-    {
-      "id": 6,
-      "name": "Sport Alloy Wheels",
-      "price": 399.99,
-      "category": "Automotive",
-      "brand": "SportRim",
-      "color": "Matte Black",
-      "material": "Aluminum Alloy",
-      "stock": 8,
-      "image": "/images/sport_alloy_wheels.png",
-      "reviews": [
-        {
-          "user": "Vinod S.",
-          "rating": 5,
-          "comment": "Great performance wheels, highly recommend!"
-        },
-        {
-          "user": "Geethu M.",
+    }
+  ]
+}

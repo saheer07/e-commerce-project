@@ -17,7 +17,7 @@ export default function Login() {
 
     if (matchedUser) {
       localStorage.setItem("user", JSON.stringify(matchedUser));
-      navigate("/");
+      navigate("/"); // Redirect to the homepage or dashboard after login
     } else {
       setErrorMsg("Invalid email or password");
     }
@@ -27,27 +27,39 @@ export default function Login() {
     <div className="flex w-full h-screen items-center justify-center bg-black">
       <div className="bg-black p-8 rounded-lg shadow-lg w-full max-w-md border border-red-800">
         <h1 className="text-2xl font-bold text-center text-red-600 mb-2">Login</h1>
-        <p className="text-center text-gray-400 mb-6">Welcome back! Please login to continue</p>
-        <form className="space-y-5" onSubmit={handleLogin}>
+        <p className="text-center text-gray-400 mb-6">Welcome back! Please enter your details</p>
+        {errorMsg && <div className="text-center text-red-500 mb-4">{errorMsg}</div>}
+        <form onSubmit={handleLogin} className="space-y-5">
+          {/* Email Field */}
           <div>
             <label className="text-red-600">Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border border-gray-600 rounded-md bg-black text-red-600"
-              placeholder="Enter your email" />
+              placeholder="Enter your email"
+            />
           </div>
+
+          {/* Password Field */}
           <div>
             <label className="text-red-600">Password</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-600 rounded-md bg-black text-red-600"
-              placeholder="Enter your password" />
+              placeholder="Password"
+            />
           </div>
-          {errorMsg && <p className="text-red-500 text-sm text-center">{errorMsg}</p>}
+
           <button type="submit" className="w-full bg-red-700 text-white py-2 rounded-md hover:bg-red-800">
-            Login
+            Log In
           </button>
         </form>
         <p className="text-center text-gray-400 mt-4">
-          Don't have an account? <Link to="/signup" className="text-red-500 hover:underline">Signup here</Link>
+          Don't have an account? <Link to="/signup" className="text-red-600">Sign up</Link>
         </p>
       </div>
     </div>
