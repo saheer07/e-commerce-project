@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import homeImage from '../assets/images/Home.jpeg';
+import homeImage from "../assets/images/Home.png"; // Make sure this path is correct
 import Products from './Products';
 
 function Home() {
@@ -18,42 +18,40 @@ function Home() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <div className="relative w-full h-screen">
+      <div className="w-full h-[60vh] sm:h-[75vh] lg:h-screen relative overflow-hidden">
         <img
           src={homeImage}
-          alt="Home Logo"
-          className="w-full  object-cover"
+          alt="Home"
+          className="w-full  h-full absolute top-0 left-0"
         />
         <button
           onClick={handleShopNow}
-          className="absolute bottom-10 right-10 bg-red-700 hover:bg-red-800 text-white py-3 px-6 rounded-md text-lg shadow-lg transition"
+          className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 bg-red-700 hover:bg-red-800 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-md text-base sm:text-lg shadow-lg transition"
         >
           Shop Now
         </button>
       </div>
 
-      {/* Category Buttons */}
-      <div className="mt-0 py-10 text-center bg-black">
-        <h2 className="text-2xl font-bold text-white mb-4">Browse by Category</h2>
-        <div className="flex justify-center flex-wrap gap-4 mb-8">
-          {['Hatchbacks', 'Sedans', 'SUVs', 'Trucks'].map((category) => (
+      {/* Category Section
+      <div className="mt-8 sm:mt-12 text-center">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-red-500 mb-4">Browse by Category</h2>
+        <div className="flex justify-center flex-wrap gap-6">
+          {['Hatchback', 'Sedan', 'SUV', 'Truck'].map((category) => (
             <button
               key={category}
               onClick={() => handleCategoryClick(category)}
-              className={`px-4 py-2 rounded-md font-medium text-white transition ${
-                selectedCategory === category
-                  ? 'bg-red-600'
-                  : 'bg-gray-700 hover:bg-red-500'
-              }`}
+              className="bg-gray-800 text-white py-2 px-6 rounded-md hover:bg-gray-700 transition"
             >
               {category}
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Product Section */}
-      <Products selectedCategory={selectedCategory} />
+      <div className="mt-0 sm:mt- text-center">
+        <Products selectedCategory={selectedCategory} />
+      </div>
     </div>
   );
 }

@@ -1,22 +1,45 @@
 {
   "users": [
     {
-      "id": 1,
-      "username": "fayis",
-      "password": "123456"
+      "id": "admin01",
+      "name": "AdminUser",
+      "email": "admin@gmail.com",
+      "password": "admin123",
+       "role": "admin",
+      "isAdmin": true
+    }
+    ,
+    
+    {
+      "id": "56a5",
+      "name": "saheer",
+      "email": "saheerxe@gmail.com",
+      "password": "5432112345"
+    },
+    {
+      "id": "ef13",
+      "name": "saheerob",
+      "email": "saheeroo@gmail.com",
+      "password": "1234554321"
+    },
+    {
+      "id": "eaf7",
+      "name": "fayis",
+      "email": "fayis@gmail.com",
+      "password": "111111"
     }
   ],
   "products": [
     {
-      "id": 1,
-      "name": "XXR Model 571 Wheels",
+      "id": "1",
+      "name": "XXR Model 571 Wheels          ",
       "price": 22.804,
       "category": "Hatchback",
       "brand": "AutoMax",
       "color": "Black",
       "material": "Aluminum Alloy",
       "stock": 10,
-      "image":  "https://images-cdn.ubuy.co.in/6719be5ee7377820987b7416-xxr-571-18x8-5-5x114-3-35et-chromium.jpg",
+      "image": "https://images-cdn.ubuy.co.in/6719be5ee7377820987b7416-xxr-571-18x8-5-5x114-3-35et-chromium.jpg",
       "reviews": [
         {
           "user": "Vishnu P.",
@@ -31,8 +54,8 @@
       ]
     },
     {
-      "id": 2,
-      "name": "XXR Model 575 Wheels",
+      "id": "2",
+      "name": "XXR Model 575 Wheels            ",
       "price": 249.99,
       "category": "Hatchback",
       "brand": "WheelTech",
@@ -54,8 +77,8 @@
       ]
     },
     {
-      "id": 3,
-      "name": "Fuel D827 Traction 1pc Custom Wheel ",
+      "id": "3",
+      "name": "Fuel D827 Traction 1pc Custom Wheel              ",
       "price": 449.99,
       "category": "Truck",
       "brand": "SpeedRim",
@@ -73,12 +96,22 @@
           "user": "Neha S.",
           "rating": 4,
           "comment": "Expensive but looks stunning on my SUV."
+        },
+        {
+          "user": "saheerob",
+          "rating": 5,
+          "comment": "er"
+        },
+        {
+          "user": "saheerob",
+          "rating": 5,
+          "comment": "d"
         }
       ]
     },
     {
-      "id": 4,
-      "name": "Alloy Wheel Grey ",
+      "id": "4",
+      "name": "Alloy Wheel Grey                             ",
       "price": 329.99,
       "category": "Hatchback",
       "brand": "WheelMaster",
@@ -100,8 +133,8 @@
       ]
     },
     {
-      "id": 5,
-      "name": "Alloy Wheels - 15 inch",
+      "id": "5",
+      "name": "Alloy Wheels - 15 inch                     ",
       "price": 199.99,
       "category": "Hatchback",
       "brand": "AutoMax",

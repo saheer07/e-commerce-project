@@ -1,44 +1,97 @@
-import React from 'react'
-import Navbar from './components/Navbar'
-import { Route, Routes } from 'react-router-dom'
-import Cart from './pages/Cart'
-import Orderlist from './pages/Orderlist'
-import Home from './pages/Home'
-import Login from './pages/UserRegistration/Login'
-import Signup from './pages/UserRegistration/Signup'
-import Products from './pages/Products'
+import React from 'react';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Cart from './pages/Cart';
+import Orderlist from './pages/Orderlist';
+import Home from './pages/Home';
+import Login from './pages/UserRegistration/Login';
+import Signup from './pages/UserRegistration/Signup';
+import Products from './pages/Products';
+import Payment from './pages/Payment';
+import ProductDetails from './pages/ProductDetails';
+import AdminDashboard from './AdminPanel/AdminDashboard';
+import ProductManagement from './AdminPanel/ProductManagement';
+import OrderManagement from './AdminPanel/OrderManagement';
+import UserManagement from './AdminPanel/UserManagement';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Payment from './pages/Payment'
-import ProductDetails from './pages/ProductDetails'
+import { useAuth } from './context/AuthContext';
 
+// ✅ Custom AdminRoute wrapper
+const AdminRoute = ({ children }) => {
+  const { user } = useAuth();
 
+  // ✅ Redirect to home if not admin
+  if (!user || !user.isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
 
+const App = () => {
+  const location = useLocation();
+  
+  // Check if we should hide the navbar
+  const hideNavbar =
+    location.pathname === '/login' ||
+    location.pathname === '/signup' ||
+    location.pathname.startsWith('/admin');
 
-
-
-
-function App() {
   return (
     <div>
-      <Navbar />
-
+      {/* Navbar should not appear on login, signup, or admin routes */}
+      {!hideNavbar && <Navbar />}
+      
       <Routes>
-      <Route path='/' element={<Home />}></Route>
-        <Route path='/Cart' element={<Cart />}></Route>
-        <Route path='/Orderlist' element={<Orderlist />}></Route>
-        <Route path='/Login' element={<Login />}></Route>
-        <Route path="/Signup" element={<Signup />} />
-        <Route path="/Products" element={<Products />} />
-        <Route path="/payment" element={<Payment />} />
+        {/* Regular routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/orderlist" element={<Orderlist />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-      
-      </Routes>
-      <ToastContainer />
-      
-    </div>
-  )
-}
 
-export default App
+        {/* ✅ Admin Routes */}
+        <Route
+  path="/admin-dashboard"
+  element={
+    <AdminRoute>
+      <AdminDashboard />
+    </AdminRoute>
+  }
+/>
+        <Route
+          path="/admin/products"
+          element={
+            <AdminRoute>
+              <ProductManagement />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/orders"
+          element={
+            <AdminRoute>
+              <OrderManagement />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <AdminRoute>
+              <UserManagement />
+            </AdminRoute>
+          }
+        />
+      </Routes>
+
+      {/* Toast notifications */}
+      <ToastContainer />
+    </div>
+  );
+};
+
+export default App;

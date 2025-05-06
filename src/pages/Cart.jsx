@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -10,7 +13,7 @@ const Cart = () => {
       const userCart = allCarts[user.email] || [];
       setCartItems(userCart);
     } else {
-      setCartItems([]); // Not logged in
+      setCartItems([]);
     }
   }, []);
 
@@ -25,6 +28,32 @@ const Cart = () => {
 
       localStorage.setItem('allCarts', JSON.stringify(allCarts));
       setCartItems(updatedCart);
+    }
+  };
+
+  const handleBuyNow = (product) => {
+    const loggedInUser = JSON.parse(localStorage.getItem('user'));
+    if (!loggedInUser) {
+      toast.warning('Please login to proceed with purchase.', { autoClose: 3000 });
+      return;
+    }
+
+    // Check and update stock
+    let allProducts = JSON.parse(localStorage.getItem('products')) || [];
+    const productIndex = allProducts.findIndex(p => p.id === product.id);
+
+    if (productIndex !== -1 && allProducts[productIndex].stock > 0) {
+      allProducts[productIndex].stock -= 1;
+
+      localStorage.setItem('products', JSON.stringify(allProducts));
+
+      // Set buyNow item to use in payment page
+      localStorage.setItem('buyNow', JSON.stringify(product));
+
+      // Navigate to payment page
+      navigate('/payment');
+    } else {
+      toast.error('Out of stock! Cannot proceed with purchase.', { autoClose: 3000 });
     }
   };
 
@@ -54,16 +83,23 @@ const Cart = () => {
               }}
             />
             <h3 className="text-xl font-semibold text-red-400 mb-2">{item.name}</h3>
-            <p className="text-gray-300 mb-1">Price: ₹{item.price?.toFixed(2)}</p>
+            <p className="text-gray-300 mb-1">Price: ${item.price?.toFixed(2)}</p>
             <p className="text-gray-400 mb-1">Brand: {item.brand}</p>
             <p className="text-gray-400 mb-1">Color: {item.color}</p>
             <p className="text-gray-400 mb-3">Stock: {item.stock}</p>
 
             <button
               onClick={() => handleRemoveFromCart(item.id)}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded mb-2 w-full"
             >
               Remove from Cart
+            </button>
+
+            <button
+              onClick={() => handleBuyNow(item)}
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full"
+            >
+              Buy Now
             </button>
           </div>
         ))}

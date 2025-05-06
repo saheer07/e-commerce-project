@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { FaMoneyBillWave, FaGooglePay, FaCreditCard } from "react-icons/fa";
+import { ClipLoader } from "react-spinners";
 
 const Payment = () => {
   const navigate = useNavigate();
@@ -9,7 +9,14 @@ const Payment = () => {
   const [user, setUser] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("COD");
   const [address, setAddress] = useState("");
-  const [cardDetails, setCardDetails] = useState({ number: "", expiry: "", cvv: "" });
+  const [quantity, setQuantity] = useState(1);
+  const [cardDetails, setCardDetails] = useState({
+    number: "",
+    expiry: "",
+    cvv: "",
+    upiId: "",
+  });
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     const storedProduct = JSON.parse(localStorage.getItem("buyNow"));
@@ -46,33 +53,51 @@ const Payment = () => {
       }
     }
 
-    try {
-      const existingOrders = JSON.parse(localStorage.getItem("orders")) || {};
-      const userOrders = existingOrders[user.email] || [];
-
-      const newOrder = {
-        ...product,
-        address,
-        paymentMethod,
-        cardDetails: paymentMethod === "Card" ? cardDetails : null,
-        purchasedAt: new Date().toISOString(),
-        deliveryDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-      };
-
-      userOrders.push(newOrder);
-      existingOrders[user.email] = userOrders;
-      localStorage.setItem("orders", JSON.stringify(existingOrders));
-      localStorage.removeItem("buyNow");
-
-      toast.success("🎉 Order placed successfully!");
-      navigate("/orderlist");
-    } catch (err) {
-      console.error("Order error:", err);
-      toast.error("Something went wrong. Please try again.");
+    if (paymentMethod === "UPI") {
+      if (!cardDetails.upiId.trim().match(/^[\w.-]+@[\w]+$/)) {
+        toast.error("Enter a valid UPI ID (e.g., name@upi).");
+        return;
+      }
     }
+
+    setIsProcessing(true);
+
+    setTimeout(() => {
+      try {
+        const existingOrders = JSON.parse(localStorage.getItem("orders")) || {};
+        const userOrders = existingOrders[user.email] || [];
+
+        const newOrder = {
+          ...product,
+          quantity,
+          total: product.price * quantity,
+          address,
+          paymentMethod,
+          cardDetails:
+            paymentMethod === "Card" || paymentMethod === "UPI" ? cardDetails : null,
+          purchasedAt: new Date().toISOString(),
+          deliveryDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+        };
+
+        userOrders.push(newOrder);
+        existingOrders[user.email] = userOrders;
+        localStorage.setItem("orders", JSON.stringify(existingOrders));
+        localStorage.removeItem("buyNow");
+
+        toast.success(`🎉 Order placed successfully! Total: $${newOrder.total}`);
+        navigate("/orderlist");
+      } catch (err) {
+        console.error("Order error:", err);
+        toast.error("Something went wrong. Please try again.");
+      } finally {
+        setIsProcessing(false);
+      }
+    }, 2000);
   };
 
   if (!product) return null;
+
+  const isDisabled = isProcessing;
 
   return (
     <div className="bg-black text-white min-h-screen px-4 py-10 flex flex-col items-center">
@@ -87,22 +112,49 @@ const Payment = () => {
           <textarea
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            disabled={isDisabled}
             className="w-full p-2 mb-4 rounded bg-gray-800 text-white border border-gray-600"
             placeholder="Enter your delivery address..."
             rows={3}
+          />
+
+          <label className="block text-gray-400 mb-1">Quantity:</label>
+          <input
+            type="number"
+            min="1"
+            value={quantity}
+            disabled={isDisabled}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="w-full p-2 mb-4 rounded bg-gray-800 text-white border border-gray-600"
           />
 
           <label className="block text-gray-400 mb-1">Select Payment Method:</label>
           <select
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
+            disabled={isDisabled}
             className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600 mb-4"
           >
             <option value="COD">💵 Cash on Delivery</option>
-            <option value="UPI">💸 UPI / PhonePe / GPay</option>
+            <option value="UPI">📱 UPI / GPay / PhonePe</option>
             <option value="Card">💳 Credit / Debit Card</option>
           </select>
 
+          {/* UPI */}
+          {paymentMethod === "UPI" && (
+            <input
+              type="text"
+              placeholder="Enter UPI ID (e.g. user@upi)"
+              className="w-full p-2 mb-4 rounded bg-gray-800 text-white border border-gray-600"
+              value={cardDetails.upiId}
+              disabled={isDisabled}
+              onChange={(e) =>
+                setCardDetails({ ...cardDetails, upiId: e.target.value })
+              }
+            />
+          )}
+
+          {/* Card Details */}
           {paymentMethod === "Card" && (
             <div className="space-y-3">
               <input
@@ -110,7 +162,10 @@ const Payment = () => {
                 placeholder="Card Number"
                 maxLength="16"
                 value={cardDetails.number}
-                onChange={(e) => setCardDetails({ ...cardDetails, number: e.target.value })}
+                disabled={isDisabled}
+                onChange={(e) =>
+                  setCardDetails({ ...cardDetails, number: e.target.value })
+                }
                 className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600"
               />
               <div className="flex gap-3">
@@ -119,7 +174,10 @@ const Payment = () => {
                   placeholder="Expiry (MM/YY)"
                   maxLength="5"
                   value={cardDetails.expiry}
-                  onChange={(e) => setCardDetails({ ...cardDetails, expiry: e.target.value })}
+                  disabled={isDisabled}
+                  onChange={(e) =>
+                    setCardDetails({ ...cardDetails, expiry: e.target.value })
+                  }
                   className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600"
                 />
                 <input
@@ -127,19 +185,37 @@ const Payment = () => {
                   placeholder="CVV"
                   maxLength="3"
                   value={cardDetails.cvv}
-                  onChange={(e) => setCardDetails({ ...cardDetails, cvv: e.target.value })}
+                  disabled={isDisabled}
+                  onChange={(e) =>
+                    setCardDetails({ ...cardDetails, cvv: e.target.value })
+                  }
                   className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600"
                 />
               </div>
             </div>
           )}
 
+          {/* Confirm Button */}
           <button
             onClick={handleConfirmPayment}
-            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full mt-6"
+            disabled={isDisabled}
+            className={`mt-6 w-full py-2 px-4 rounded font-bold ${
+              isDisabled
+                ? "bg-gray-600 cursor-not-allowed"
+                : "bg-red-600 hover:bg-red-700"
+            }`}
           >
-            ✅ Confirm & Pay ₹{product.price}
+            {isProcessing ? (
+              <div className="flex justify-center items-center gap-2">
+                <ClipLoader color="#fff" size={20} />
+                Processing...
+              </div>
+            ) : (
+              `✅ Confirm & Pay $${product.price * quantity}`
+            )}
           </button>
+
+          <p className="text-xs text-gray-400 mt-3 text-center">🔒 100% secure & encrypted payment</p>
         </div>
 
         {/* Right - Summary */}
@@ -153,7 +229,11 @@ const Payment = () => {
           <p className="text-xl text-red-400 font-bold mb-2">{product.name}</p>
           <p className="text-gray-300">Brand: {product.brand}</p>
           <p className="text-gray-300">Color: {product.color}</p>
-          <p className="text-gray-300 mb-2">Price: ₹{product.price}</p>
+          <p className="text-gray-300">Unit Price: ${product.price}</p>
+          <p className="text-gray-300">Quantity: {quantity}</p>
+          <p className="text-green-400 font-semibold mt-2">
+            Total Price: ${product.price * quantity}
+          </p>
           <p className="text-green-400 font-semibold">
             Delivery by: {new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString()}
           </p>
