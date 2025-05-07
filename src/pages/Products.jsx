@@ -116,7 +116,7 @@ const Products = () => {
         >
           <option value="All">All Categories</option>
           <option value="Hatchback">For Hatchbacks</option>
-          <option value="Sedan">For Sedans</option>
+          <option value="Sedan">For Sedans</option> 
           <option value="SUV">For SUVs</option>
           <option value="Truck">For Trucks</option>
         </select>

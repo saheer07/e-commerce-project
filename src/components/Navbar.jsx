@@ -114,8 +114,9 @@ function Navbar() {
             </>
           )}
 
-          {userRole === "admin" && (
-            <Link to="/admin" className="flex items-center gap-1 hover:underline">
+          {/* Only show Dashboard for Admin */}
+          {userRole === 'admin' && (
+            <Link to="/admin-dashboard" className="flex items-center gap-1 hover:underline">
               🛠 Dashboard
             </Link>
           )}
@@ -155,8 +156,9 @@ function Navbar() {
             </>
           )}
 
-          {userRole === "admin" && (
-            <Link to="/admin" className="flex items-center gap-1 hover:underline">
+          {/* Only show Dashboard for Admin */}
+          {userRole === 'admin' && (
+            <Link to="/admin-dashboard" className="flex items-center gap-1 hover:underline">
               🛠 Dashboard
             </Link>
           )}

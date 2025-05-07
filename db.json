@@ -2,14 +2,12 @@
   "users": [
     {
       "id": "admin01",
-      "name": "AdminUser",
+      "name": "Admin",
       "email": "admin@gmail.com",
       "password": "admin123",
-       "role": "admin",
+      "role": "admin",
       "isAdmin": true
-    }
-    ,
-    
+    },
     {
       "id": "56a5",
       "name": "saheer",
@@ -27,6 +25,12 @@
       "name": "fayis",
       "email": "fayis@gmail.com",
       "password": "111111"
+    },
+    {
+      "id": "eb08",
+      "name": "favas",
+      "email": "favas@gmail.com",
+      "password": "123456654321"
     }
   ],
   "products": [
@@ -78,7 +82,7 @@
     },
     {
       "id": "3",
-      "name": "Fuel D827 Traction 1pc Custom Wheel              ",
+      "name": "Fuel D827 Traction 1pc Custom               ",
       "price": 449.99,
       "category": "Truck",
       "brand": "SpeedRim",
@@ -154,6 +158,58 @@
           "comment": "Decent, but the finish could be better."
         }
       ]
+    },
+    {
+      "id": "19dc",
+      "name": "Alloy Wheel Diamond Cut ",
+      "price": 289,
+      "stock": 10,
+      "category": "Sedan",
+      "description": "",
+      "image": "https://5.imimg.com/data5/SELLER/Default/2024/5/422491835/TL/WO/OS/220106875/s-presso-diamond-cut-alloy-wheel.jpg",
+      "reviews": [
+        {
+          "user": "saheer",
+          "rating": 5,
+          "comment": "dcvd"
+        }
+      ]
+    },
+    {
+      "id": "f846",
+      "name": "Forging Car Wheel Aluminum",
+      "price": 300,
+      "stock": 5,
+      "category": "SUV",
+      "description": "",
+      "image": "https://image.made-in-china.com/2f0j00FBMVqivPkAgu/Forging-Car-Wheel-Aluminum-Wheel-17-prime-prime-18-prime-prime-19-prime-prime-PCD-5X114-3-6X139-7.webp"
+    },
+    {
+      "id": "b478",
+      "name": "Hote off Road Alloy Wheels",
+      "price": 313,
+      "stock": 5,
+      "category": "SUV",
+      "description": "",
+      "image": "https://s.alicdn.com/@sc04/kf/H1562a7f96f1148f8a32b7fc949293a1a6.jpg_720x720q50.jpg"
+    },
+    {
+      "id": "6ef7",
+      "name": "CUSTOM 2 PIECE FORGED BIG LIP WHEELS",
+      "price": 279,
+      "stock": 8,
+      "category": "SUV",
+      "description": "",
+      "image": "https://rvrnwheel.com/cdn/shop/files/T081-Black-Chrome-Deep-dish-corvette-truck-wheels-custom-forged-2pc-rvrn-forged-rims.png?v=1740465989"
+    },
+    {
+      "id": "7750",
+      "name": "ION Alloy 174 Gloss Black Machined Lip",
+      "price": 247,
+      "stock": 5,
+      "category": "SUV",
+      "description": "",
+      "image": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQwQ8uvuQXuhxDsTcoBrYj2NcCc9PFTOtlrSODoIoRvPvGy1jDQTeCUiu4glvwbQBGdEOVUCi4-fxY95UxN6AjznK-rO3zwUrZT1ZhYOd_Dk2ErSRH9Ffj3eQ"
     }
   ]
 }

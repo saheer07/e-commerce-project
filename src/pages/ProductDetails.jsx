@@ -6,8 +6,6 @@ import { toast } from 'react-toastify';
 import StarRating from './StarRating';
 import ReviewItem from './ReviewItem';
 
-
-
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -197,24 +195,23 @@ const ProductDetails = () => {
         <h3 className="text-2xl font-semibold mt-8 mb-2">🗣️ Reviews</h3>
 
         {product.reviews && product.reviews.length > 0 ? (
-  product.reviews.map((review, index) => (
-    <ReviewItem
-      key={index}
-      index={index}
-      review={{
-        ...review,
-        canDelete: review.user === JSON.parse(localStorage.getItem('user'))?.name
-      }}
-      highlighted={highlightedIndex === index}
-      onDelete={handleReviewDelete}
-      reviewRef={(el) => reviewRefs.current[index] = el}
-    />
-  ))
-) : (
-  <p className="text-gray-400">No reviews yet.</p>
-)}
+          product.reviews.map((review, index) => (
+            <ReviewItem
+              key={index}
+              index={index}
+              review={{
+                ...review,
+                canDelete: review.user === JSON.parse(localStorage.getItem('user'))?.name,
+              }}
+              highlighted={highlightedIndex === index}
+              onDelete={handleReviewDelete}
+              reviewRef={(el) => (reviewRefs.current[index] = el)}
+            />
+          ))
+        ) : (
+          <p className="text-gray-400">No reviews yet.</p>
+        )}
 
-        {/* Review Submission */}
         <div className="mt-6">
           <h4 className="text-xl font-semibold mb-2">Write a Review</h4>
           <StarRating rating={rating} setRating={setRating} />

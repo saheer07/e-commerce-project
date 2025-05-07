@@ -17,21 +17,16 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './context/AuthContext';
 
-// ✅ Custom AdminRoute wrapper
+// ✅ Admin route wrapper
 const AdminRoute = ({ children }) => {
   const { user } = useAuth();
-
-  // ✅ Redirect to home if not admin
-  if (!user || !user.isAdmin) {
-    return <Navigate to="/" replace />;
-  }
-  return children;
+  return user && user.isAdmin ? children : <Navigate to="/" replace />;
 };
 
 const App = () => {
   const location = useLocation();
-  
-  // Check if we should hide the navbar
+
+  // ❌ Hide navbar on these routes
   const hideNavbar =
     location.pathname === '/login' ||
     location.pathname === '/signup' ||
@@ -39,11 +34,12 @@ const App = () => {
 
   return (
     <div>
-      {/* Navbar should not appear on login, signup, or admin routes */}
+      {/* ✅ Conditional Navbar */}
       {!hideNavbar && <Navbar />}
-      
+
+      {/* ✅ App Routes */}
       <Routes>
-        {/* Regular routes */}
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orderlist" element={<Orderlist />} />
@@ -53,15 +49,15 @@ const App = () => {
         <Route path="/payment" element={<Payment />} />
         <Route path="/product/:id" element={<ProductDetails />} />
 
-        {/* ✅ Admin Routes */}
+        {/* ✅ Admin Routes with Protection */}
         <Route
-  path="/admin-dashboard"
-  element={
-    <AdminRoute>
-      <AdminDashboard />
-    </AdminRoute>
-  }
-/>
+          path="/admin-dashboard"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
         <Route
           path="/admin/products"
           element={

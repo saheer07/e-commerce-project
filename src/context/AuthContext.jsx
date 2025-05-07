@@ -1,23 +1,39 @@
-// src/context/AuthContext.jsx
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 
-// Create context
 const AuthContext = createContext();
 
-// AuthProvider component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // 🟡 Add loading state
 
-  // Simulate a login function, could be replaced with real login logic
-  const login = (userData) => setUser(userData);
-  const logout = () => setUser(null);
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+    setLoading(false); // ✅ loading false aakkanam
+  }, []);
+
+  const login = (userData) => {
+    const formattedUser = {
+      ...userData,
+      role: userData.role || (userData.isAdmin ? "admin" : "user"),
+      isAdmin: userData.isAdmin || userData.role === "admin",
+    };
+    localStorage.setItem("user", JSON.stringify(formattedUser));
+    setUser(formattedUser);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Custom hook to use auth context
 export const useAuth = () => useContext(AuthContext);

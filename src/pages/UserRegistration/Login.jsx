@@ -20,13 +20,15 @@ const Login = () => {
           id: user.id,
           name: user.name,
           email: user.email,
-          role: user.role || (user.isAdmin ? "admin" : "user")
+          role: user.role || (user.isAdmin ? "admin" : "user"),
+          isAdmin: user.isAdmin || user.role === "admin" // <-- add this line
         }));
+        
 
         toast.success("Login successful!");
 
         if (user.role === "admin" || user.isAdmin) {
-          navigate('/admin');
+          navigate('/admin-dashboard');
         } else {
           navigate('/');
         }

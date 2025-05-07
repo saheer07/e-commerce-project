@@ -124,7 +124,7 @@ const Payment = () => {
             min="1"
             value={quantity}
             disabled={isDisabled}
-            onChange={(e) => setQuantity(Number(e.target.value))}
+            onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
             className="w-full p-2 mb-4 rounded bg-gray-800 text-white border border-gray-600"
           />
 
