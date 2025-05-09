@@ -9,5 +9,6 @@ export default defineConfig({
     proxy: {
       '/products': 'http://localhost:3001',
     },
+    hmr:  false
   },
 })

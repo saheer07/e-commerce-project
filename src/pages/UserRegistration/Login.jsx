@@ -16,14 +16,21 @@ const Login = () => {
       if (res.data.length > 0) {
         const user = res.data[0];
 
+        // Check if the user is blocked
+        if (user.isBlocked) {
+          setErrorMsg("Your account is blocked. Please contact support.");
+          toast.error("Your account is blocked. Please contact support.");
+          return;
+        }
+
+        // If not blocked, proceed with login
         localStorage.setItem("user", JSON.stringify({
           id: user.id,
           name: user.name,
           email: user.email,
           role: user.role || (user.isAdmin ? "admin" : "user"),
-          isAdmin: user.isAdmin || user.role === "admin" // <-- add this line
+          isAdmin: user.isAdmin || user.role === "admin"
         }));
-        
 
         toast.success("Login successful!");
 

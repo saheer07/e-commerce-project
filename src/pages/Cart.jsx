@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -17,43 +18,52 @@ const Cart = () => {
     }
   }, []);
 
-  const handleRemoveFromCart = (id) => {
+  const updateLocalStorageCart = (updatedCart) => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       const allCarts = JSON.parse(localStorage.getItem('allCarts')) || {};
-      const userCart = allCarts[user.email] || [];
-
-      const updatedCart = userCart.filter((item) => item.id !== id);
       allCarts[user.email] = updatedCart;
-
       localStorage.setItem('allCarts', JSON.stringify(allCarts));
-      setCartItems(updatedCart);
     }
   };
 
-  const handleBuyNow = (product) => {
+  const handleRemoveFromCart = (id) => {
+    const updatedCart = cartItems.filter((item) => item.id !== id);
+    setCartItems(updatedCart);
+    updateLocalStorageCart(updatedCart);
+  };
+
+  const handleBuyNow = async (product) => {
     const loggedInUser = JSON.parse(localStorage.getItem('user'));
     if (!loggedInUser) {
       toast.warning('Please login to proceed with purchase.', { autoClose: 3000 });
       return;
     }
 
-    // Check and update stock
-    let allProducts = JSON.parse(localStorage.getItem('products')) || [];
-    const productIndex = allProducts.findIndex(p => p.id === product.id);
+    try {
+      const response = await axios.get(`http://localhost:3001/products/${product.id}`);
+      const dbProduct = response.data;
 
-    if (productIndex !== -1 && allProducts[productIndex].stock > 0) {
-      allProducts[productIndex].stock -= 1;
+      if (dbProduct.stock > 0) {
+        const updatedProduct = { ...dbProduct, stock: dbProduct.stock - 1 };
 
-      localStorage.setItem('products', JSON.stringify(allProducts));
+        await axios.put(`http://localhost:3001/products/${product.id}`, updatedProduct);
 
-      // Set buyNow item to use in payment page
-      localStorage.setItem('buyNow', JSON.stringify(product));
+        // remove from cart
+        const updatedCart = cartItems.filter((item) => item.id !== product.id);
+        setCartItems(updatedCart);
+        updateLocalStorageCart(updatedCart);
 
-      // Navigate to payment page
-      navigate('/payment');
-    } else {
-      toast.error('Out of stock! Cannot proceed with purchase.', { autoClose: 3000 });
+        // set item for payment
+        localStorage.setItem('buyNow', JSON.stringify(updatedProduct));
+
+        toast.success('Proceeding to payment...', { autoClose: 2000 });
+        navigate('/payment');
+      } else {
+        toast.error('Out of stock! Cannot proceed with purchase.', { autoClose: 3000 });
+      }
+    } catch (error) {
+      toast.error('Something went wrong while updating stock.', { autoClose: 3000 });
     }
   };
 
@@ -77,7 +87,7 @@ const Cart = () => {
             <img
               src={item.image || 'https://via.placeholder.com/150'}
               alt={item.name}
-              className="h-48 object-cover rounded mb-4"
+              className="h-48 w-full object-contain rounded bg-white p-2 mb-4"
               onError={(e) => {
                 e.target.src = 'https://via.placeholder.com/150';
               }}
@@ -86,7 +96,8 @@ const Cart = () => {
             <p className="text-gray-300 mb-1">Price: ${item.price?.toFixed(2)}</p>
             <p className="text-gray-400 mb-1">Brand: {item.brand}</p>
             <p className="text-gray-400 mb-1">Color: {item.color}</p>
-            <p className="text-gray-400 mb-3">Stock: {item.stock}</p>
+            <p className="text-gray-400 mb-1">Stock: {item.stock}</p>
+            <p className="text-gray-300 mb-3">Quantity: {item.quantity || 1}</p>
 
             <button
               onClick={() => handleRemoveFromCart(item.id)}

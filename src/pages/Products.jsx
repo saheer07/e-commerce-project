@@ -13,7 +13,6 @@ const Products = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Read search term from URL query params
     const params = new URLSearchParams(location.search);
     const searchQuery = params.get('search') || '';
     setSearchTerm(searchQuery);
@@ -63,7 +62,7 @@ const Products = () => {
     }
   };
 
-  const handleBuyNow = (product) => {
+  const handleBuyNow = async (product) => {
     const loggedInUser = JSON.parse(localStorage.getItem('user'));
     if (!loggedInUser) {
       toast.warning('Please login to proceed with purchase.', { autoClose: 3000 });
@@ -71,13 +70,22 @@ const Products = () => {
     }
 
     if (product.stock > 0) {
-      const updatedProducts = products.map((prod) =>
-        prod.id === product.id ? { ...prod, stock: prod.stock - 1 } : prod
-      );
-      setProducts(updatedProducts);
-      localStorage.setItem('products', JSON.stringify(updatedProducts));
-      localStorage.setItem('buyNow', JSON.stringify(product));
-      navigate('/payment');
+      const updatedProduct = { ...product, stock: product.stock - 1 };
+
+      try {
+        await axios.put(`http://localhost:3001/products/${product.id}`, updatedProduct);
+
+        const updatedProducts = products.map((p) =>
+          p.id === product.id ? updatedProduct : p
+        );
+        setProducts(updatedProducts);
+
+        localStorage.setItem('buyNow', JSON.stringify(updatedProduct));
+        toast.success('Proceeding to payment...', { autoClose: 2000 });
+        navigate('/payment');
+      } catch (error) {
+        toast.error('Error updating product stock. Try again.', { autoClose: 3000 });
+      }
     } else {
       toast.error('Out of stock! Cannot proceed with purchase.', { autoClose: 3000 });
     }
@@ -104,7 +112,7 @@ const Products = () => {
   }
 
   return (
-    <div className="	bg-black  text-white min-h-screen px-4 py-6 bg-gradient-to-b from-black to-gray-900 px-4">
+    <div className="bg-black text-white min-h-screen px-4 py-6 bg-gradient-to-b from-black to-gray-900">
       <h2 className="text-3xl font-bold text-center text-red-500 mb-6">Alloy Wheels</h2>
 
       {/* Category Filter */}
@@ -116,7 +124,7 @@ const Products = () => {
         >
           <option value="All">All Categories</option>
           <option value="Hatchback">For Hatchbacks</option>
-          <option value="Sedan">For Sedans</option> 
+          <option value="Sedan">For Sedans</option>
           <option value="SUV">For SUVs</option>
           <option value="Truck">For Trucks</option>
         </select>
@@ -147,9 +155,6 @@ const Products = () => {
                 {product.name}
               </h3>
               <p className="text-gray-300 mb-1">Price: ${product.price?.toFixed(2) || 'N/A'}</p>
-              {/* <p className="text-gray-400 mb-1">Brand: {product.brand || 'Unknown'}</p> */}
-              {/* <p className="text-gray-400 mb-1">Color: {product.color || 'N/A'}</p> */}
-              {/* <p className="text-gray-400 mb-3">Stock: {product.stock ?? 'N/A'}</p> */}
 
               <div className="flex flex-col sm:flex-row sm:justify-between gap-2">
                 <button

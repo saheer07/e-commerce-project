@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import AdminNavbar from './AdminNavbar';
+
 
 const AdminDashboard = () => {
   const { user, loading } = useAuth();
@@ -57,22 +58,12 @@ const AdminDashboard = () => {
   const unavailableProducts = products.filter((product) => product.quantity === 0);
 
   return (
-    <div className="admin-dashboard bg-black text-white min-h-screen p-6 flex">
-      <div className="w-1/4">
-        <div className="admin-links space-y-6">
-          <Link to="/admin/products" className="block text-lg text-red-500 hover:text-red-300 p-4 rounded-xl bg-gray-950 hover:bg-gray-800 shadow-lg">
-            Manage Products
-          </Link>
-          <Link to="/admin/orders" className="block text-lg text-red-500 hover:text-red-300 p-4 rounded-xl bg-gray-950 hover:bg-gray-800 shadow-lg">
-            Manage Orders
-          </Link>
-          <Link to="/admin/users" className="block text-lg text-red-500 hover:text-red-300 p-4 rounded-xl bg-gray-950 hover:bg-gray-800 shadow-lg">
-            Manage Users
-          </Link>
-        </div>
-      </div>
+    <div className="admin-dashboard bg-gradient-to-b from-black to-gray-900 text-white min-h-screen p-6 flex flex-col md:flex-row">
+      {/* Sidebar Navbar */}
+      <AdminNavbar />
 
-      <div className="w-3/4 pl-8">
+      {/* Dashboard Content */}
+      <div className="w-full md:w-3/4 md:pl-8">
         <h1 className="text-4xl font-bold text-center text-red-500 mb-8">Admin Dashboard</h1>
 
         {/* Product Availability */}

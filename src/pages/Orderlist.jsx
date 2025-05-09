@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Orderlist = () => {
   const [orders, setOrders] = useState(null);
@@ -6,13 +8,18 @@ const Orderlist = () => {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [cancelIndex, setCancelIndex] = useState(null);
+  const [toastMessage, setToastMessage] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      const allOrders = JSON.parse(localStorage.getItem("orders")) || {};
-      const userOrders = allOrders[user.email] || [];
-      setOrders(userOrders);
+    if (user?.email) {
+      axios.get(`http://localhost:3001/orders?email=${user.email}`)
+        .then(response => setOrders(response.data))
+        .catch(err => {
+          console.error("Error fetching orders: ", err);
+          setOrders([]);
+        });
     } else {
       setOrders([]);
     }
@@ -25,31 +32,31 @@ const Orderlist = () => {
     }
 
     const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      const allOrders = JSON.parse(localStorage.getItem("orders")) || {};
-      const userOrders = allOrders[user.email] || [];
-
+    if (user && cancelIndex !== null) {
+      const orderToCancel = orders[cancelIndex];
       const cancelledOrder = {
-        ...userOrders[cancelIndex],
+        ...orderToCancel,
         cancelledAt: new Date().toISOString(),
         cancelReason,
+        status: "Cancelled"
       };
 
-      const cancelledOrders = JSON.parse(localStorage.getItem("cancelledOrders")) || {};
-      const userCancelled = cancelledOrders[user.email] || [];
-      userCancelled.push(cancelledOrder);
-      cancelledOrders[user.email] = userCancelled;
-      localStorage.setItem("cancelledOrders", JSON.stringify(cancelledOrders));
-
-      userOrders.splice(cancelIndex, 1);
-      allOrders[user.email] = userOrders;
-      localStorage.setItem("orders", JSON.stringify(allOrders));
-      setOrders([...userOrders]);
+      axios.post("http://localhost:3001/cancelledOrders", cancelledOrder)
+        .then(() => {
+          return axios.delete(`http://localhost:3001/orders/${orderToCancel.id}`);
+        })
+        .then(() => {
+          setOrders(prev => prev.filter((_, i) => i !== cancelIndex));
+          setShowCancelModal(false);
+          setCancelReason("");
+          setCancelIndex(null);
+          setToastMessage("Your order has been successfully cancelled!");
+          setTimeout(() => setToastMessage(""), 3000);
+        })
+        .catch(err => {
+          console.error("Error cancelling order: ", err);
+        });
     }
-
-    setShowCancelModal(false);
-    setCancelReason("");
-    setCancelIndex(null);
   };
 
   if (orders === null) {
@@ -59,9 +66,19 @@ const Orderlist = () => {
   if (orders.length === 0) {
     return (
       <div className="bg-black text-white min-h-screen p-6 text-center flex flex-col items-center justify-center">
-        <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="No Orders" className="w-32 mb-4 opacity-60" />
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
+          alt="No Orders"
+          className="w-32 mb-4 opacity-60"
+        />
         <h2 className="text-3xl font-bold text-red-400">You have no orders yet.</h2>
         <p className="text-gray-400 mt-2">Start shopping and place your first order!</p>
+        <button
+          onClick={() => navigate('/products')}
+          className="mt-6 bg-red-700 hover:bg-red-800 text-white py-2 px-6 rounded"
+        >
+          Shop Now
+        </button>
       </div>
     );
   }
@@ -70,11 +87,10 @@ const Orderlist = () => {
     <div className="bg-gray-950 min-h-screen p-6 text-white">
       <h2 className="text-4xl font-bold text-red-500 text-center mb-10">📦 My Orders</h2>
 
-      {/* Order Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {orders.map((order, index) => (
           <div
-            key={index}
+            key={order.id}
             onClick={() => setSelectedOrder(order)}
             className="cursor-pointer bg-gray-900 rounded-xl p-5 shadow-lg border border-gray-800 hover:scale-105 transition-transform duration-200"
           >
@@ -86,7 +102,11 @@ const Orderlist = () => {
             />
             <h3 className="text-xl font-semibold text-red-400 mb-1">{order.name}</h3>
             <p className="text-gray-300">Price: ${order.price}</p>
+            <p className="text-gray-400">Quantity: {order.quantity || 1}</p>
             <p className="text-green-400 font-medium">Delivery: {order.deliveryDate}</p>
+            {order.status === "Cancelled" && (
+              <p className="text-red-500 font-bold mt-1">Status: Cancelled</p>
+            )}
           </div>
         ))}
       </div>
@@ -99,7 +119,7 @@ const Orderlist = () => {
               onClick={() => setSelectedOrder(null)}
               className="absolute top-2 right-3 text-white text-xl font-bold hover:text-red-400"
             >
-              ✖
+              Back
             </button>
             <img
               src={selectedOrder.image}
@@ -110,27 +130,30 @@ const Orderlist = () => {
             <p>Brand: {selectedOrder.brand}</p>
             <p>Color: {selectedOrder.color}</p>
             <p>Price: ${selectedOrder.price}</p>
+            <p>Quantity: {selectedOrder.quantity || 1}</p>
             <p>Address: {selectedOrder.address}</p>
             <p>Payment Method: {selectedOrder.paymentMethod}</p>
             <p>Ordered At: {new Date(selectedOrder.purchasedAt).toLocaleString()}</p>
             <p className="text-green-400 font-medium">Delivery by: {selectedOrder.deliveryDate}</p>
 
-            <button
-              onClick={() => {
-                const index = orders.findIndex(o => o.purchasedAt === selectedOrder.purchasedAt);
-                setCancelIndex(index);
-                setShowCancelModal(true);
-                setSelectedOrder(null);
-              }}
-              className="mt-4 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg w-full"
-            >
-              Cancel Order
-            </button>
+            {selectedOrder.status !== "Cancelled" && (
+              <button
+                onClick={() => {
+                  const index = orders.findIndex(o => o.id === selectedOrder.id);
+                  setCancelIndex(index);
+                  setShowCancelModal(true);
+                  setSelectedOrder(null);
+                }}
+                className="mt-4 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg w-full"
+              >
+                Cancel Order
+              </button>
+            )}
           </div>
         </div>
       )}
 
-      {/* Cancel Order Modal */}
+      {/* Cancel Modal */}
       {showCancelModal && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="bg-gray-800 text-white rounded-xl p-6 w-full max-w-md relative">
@@ -164,6 +187,20 @@ const Orderlist = () => {
           </div>
         </div>
       )}
+
+      {/* Toast */}
+      {toastMessage && (
+        <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg z-50">
+          {toastMessage}
+        </div>
+      )}
+
+      <button
+        onClick={() => navigate('/products')}
+        className="mt-10 block mx-auto bg-red-700 hover:bg-red-800 text-white py-2 px-6 rounded"
+      >
+        Shop Now
+      </button>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import axios from "axios";
 
 const Payment = () => {
   const navigate = useNavigate();
@@ -64,32 +65,46 @@ const Payment = () => {
 
     setTimeout(() => {
       try {
-        const existingOrders = JSON.parse(localStorage.getItem("orders")) || {};
-        const userOrders = existingOrders[user.email] || [];
+        const deliveryCharge = product.price * quantity < 500 ? 40 : 0;
+        const totalAmount = product.price * quantity + deliveryCharge;
 
         const newOrder = {
           ...product,
           quantity,
-          total: product.price * quantity,
           address,
           paymentMethod,
-          cardDetails:
-            paymentMethod === "Card" || paymentMethod === "UPI" ? cardDetails : null,
+          cardDetails: (paymentMethod === "Card" || paymentMethod === "UPI") ? cardDetails : null,
+          deliveryCharge,
+          total: totalAmount,
           purchasedAt: new Date().toISOString(),
-          deliveryDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+          deliveryDate: `${new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString()} - ${new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString()}`,
+          email: user.email,
+          status: "Ordered"
         };
 
-        userOrders.push(newOrder);
-        existingOrders[user.email] = userOrders;
-        localStorage.setItem("orders", JSON.stringify(existingOrders));
-        localStorage.removeItem("buyNow");
+        axios.post("http://localhost:3001/orders", newOrder)
+          .then(() => {
+            const existingOrders = JSON.parse(localStorage.getItem("orders")) || {};
+            const userOrders = existingOrders[user.email] || [];
+            userOrders.push(newOrder);
+            existingOrders[user.email] = userOrders;
+            localStorage.setItem("orders", JSON.stringify(existingOrders));
 
-        toast.success(`🎉 Order placed successfully! Total: $${newOrder.total}`);
-        navigate("/orderlist");
+            localStorage.removeItem("buyNow");
+            toast.success(`🎉 Order placed successfully! Total: $${totalAmount}`);
+            navigate("/orderlist");
+          })
+          .catch((err) => {
+            console.error("Order saving failed:", err);
+            toast.error("Something went wrong. Please try again.");
+          })
+          .finally(() => {
+            setIsProcessing(false);
+          });
+
       } catch (err) {
         console.error("Order error:", err);
         toast.error("Something went wrong. Please try again.");
-      } finally {
         setIsProcessing(false);
       }
     }, 2000);
@@ -98,6 +113,8 @@ const Payment = () => {
   if (!product) return null;
 
   const isDisabled = isProcessing;
+  const deliveryCharge = product.price * quantity < 500 ? 40 : 0;
+  const totalAmount = product.price * quantity + deliveryCharge;
 
   return (
     <div className="bg-black text-white min-h-screen px-4 py-10 flex flex-col items-center">
@@ -211,11 +228,13 @@ const Payment = () => {
                 Processing...
               </div>
             ) : (
-              `✅ Confirm & Pay $${product.price * quantity}`
+              `✅ Confirm & Pay $${totalAmount}`
             )}
           </button>
 
-          <p className="text-xs text-gray-400 mt-3 text-center">🔒 100% secure & encrypted payment</p>
+          <p className="text-xs text-gray-400 mt-3 text-center">
+            🔒 100% secure & encrypted payment
+          </p>
         </div>
 
         {/* Right - Summary */}
@@ -231,12 +250,22 @@ const Payment = () => {
           <p className="text-gray-300">Color: {product.color}</p>
           <p className="text-gray-300">Unit Price: ${product.price}</p>
           <p className="text-gray-300">Quantity: {quantity}</p>
+          <p className="text-gray-300">
+            Delivery Charges: {deliveryCharge > 0 ? `$${deliveryCharge}` : "Free"}
+          </p>
           <p className="text-green-400 font-semibold mt-2">
-            Total Price: ${product.price * quantity}
+            Total Price: ${totalAmount}
           </p>
           <p className="text-green-400 font-semibold">
-            Delivery by: {new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString()}
+            Delivery by: {new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString()} -{" "}
+            {new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString()}
           </p>
+
+          {quantity >= 3 && (
+            <p className="text-yellow-400 font-semibold mt-2">
+              🎉 Special Offer: You get 10% OFF on bulk orders (Applied in future)!
+            </p>
+          )}
         </div>
       </div>
     </div>
