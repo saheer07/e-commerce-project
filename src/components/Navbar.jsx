@@ -6,6 +6,9 @@ import { IoReorderFour, IoSearchOutline } from "react-icons/io5";
 import { ImUserTie } from "react-icons/im";
 import { HiMenu, HiX } from "react-icons/hi";
 import { GiCarWheel } from "react-icons/gi";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
+
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -117,7 +120,7 @@ function Navbar() {
           {/* Only show Dashboard for Admin */}
           {userRole === 'admin' && (
             <Link to="/admin-dashboard" className="flex items-center gap-1 hover:underline">
-              🛠 Dashboard
+              <FontAwesomeIcon icon={faScrewdriverWrench} /> Dashboard
             </Link>
           )}
 
@@ -159,7 +162,7 @@ function Navbar() {
           {/* Only show Dashboard for Admin */}
           {userRole === 'admin' && (
             <Link to="/admin-dashboard" className="flex items-center gap-1 hover:underline">
-              🛠 Dashboard
+              <FontAwesomeIcon icon={faScrewdriverWrench} /> Dashboard
             </Link>
           )}
 

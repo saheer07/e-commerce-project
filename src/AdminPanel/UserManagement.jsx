@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import AdminNavbar from "./AdminNavbar";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -7,10 +8,13 @@ const UserManagement = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [carts, setCarts] = useState({});
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(null); // Add error state
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const usersRes = await axios.get("http://localhost:3001/users");
         const ordersRes = await axios.get("http://localhost:3001/orders");
 
@@ -23,20 +27,25 @@ const UserManagement = () => {
         const allCarts = JSON.parse(localStorage.getItem("allCarts")) || {};
         setCarts(allCarts);
       } catch (error) {
+        setError("Error fetching data. Please try again later.");
         console.error("Error fetching data", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  const getOrdersForUser = (email) => {
-    return orders.filter((order) => order.email === email);
-  };
+  const getOrdersForUser = useCallback(
+    (email) => orders.filter((order) => order.email === email),
+    [orders]
+  );
 
-  const getCartForUser = (email) => {
-    return carts[email] || [];
-  };
+  const getCartForUser = useCallback(
+    (email) => carts[email] || [],
+    [carts]
+  );
 
   const handleBlockUnblock = async (userId, isBlocked) => {
     try {
@@ -53,8 +62,16 @@ const UserManagement = () => {
     }
   };
 
+  if (loading) return <div className="text-center text-white">Loading...</div>;
+  if (error) return <div className="text-center text-red-500">{error}</div>;
+
   return (
-    <div className="bg-black min-h-screen text-white p-6">
+    <div className="admin-dashboard bg-gradient-to-b from-black to-gray-900 text-white min-h-screen p-6 flex flex-col md:flex-row">
+    <AdminNavbar />
+  
+    <div className="w-full md:w-3/4 md:pl-8">
+      {/* Sidebar */}
+     
       <h2 className="text-4xl font-bold text-red-400 text-center mb-8">👥 User Management</h2>
 
       {currentUser && users.length > 0 ? (
@@ -77,9 +94,7 @@ const UserManagement = () => {
                 </button>
                 <button
                   onClick={() => handleBlockUnblock(user.id, user.isBlocked)}
-                  className={`px-4 py-2 rounded ${
-                    user.isBlocked ? "bg-red-600 hover:bg-red-700" : "bg-yellow-600 hover:bg-yellow-700"
-                  }`}
+                  className={`px-4 py-2 rounded ${user.isBlocked ? "bg-red-600 hover:bg-red-700" : "bg-yellow-600 hover:bg-yellow-700"}`}
                 >
                   {user.isBlocked ? "Unblock" : "Block"}
                 </button>
@@ -91,85 +106,83 @@ const UserManagement = () => {
         <p className="text-center text-gray-400">No user data found.</p>
       )}
 
-{/* Orders & Cart Modal */}
-{selectedUser && (
-  <div className="bg-black bg-opacity-80 fixed inset-0 z-50 flex justify-center items-center pt-5">
-    <div className="bg-gray-800 p-6 rounded-lg max-w-[90%] md:max-w-3xl w-full relative overflow-y-auto max-h-[90vh]">
-      <button
-        onClick={() => setSelectedUser(null)}
-        className="absolute top-2 right-3 text-black text-xl hover:text-red-400"
-      >
-        Back
-      </button>
-      <h3 className="text-2xl font-bold text-red-400 mb-4 text-center md:text-left">
-        {selectedUser.name}'s Profile
-      </h3>
+      {/* Orders & Cart Modal */}
+      {selectedUser && (
+        <div className="bg-black bg-opacity-80 fixed inset-0 z-50 flex justify-center items-center pt-5">
+          <div className="bg-gray-800 p-6 rounded-lg max-w-[90%] md:max-w-3xl w-full relative overflow-y-auto max-h-[90vh]">
+            <button
+              onClick={() => setSelectedUser(null)}
+              className="absolute top-2 right-3 text-black text-xl hover:text-red-400"
+            >
+              Back
+            </button>
+            <h3 className="text-2xl font-bold text-red-400 mb-4 text-center md:text-left">
+              {selectedUser.name}'s Profile
+            </h3>
 
-      {/* User Info (Scrollable if necessary) */}
-      <div className="mb-6 bg-gray-700 p-4 rounded-lg border border-gray-600 overflow-y-auto max-h-[200px]">
-        <p><span className="font-semibold text-gray-300">Name:</span> {selectedUser.name}</p>
-        <p><span className="font-semibold text-gray-300">Email:</span> {selectedUser.email}</p>
-        <p><span className="font-semibold text-gray-300">Password:</span> {selectedUser.password}</p>
-        <p><span className="font-semibold text-gray-300">Total Orders:</span> {selectedUser.orders.length}</p>
-      </div>
+            {/* User Info (Scrollable if necessary) */}
+            <div className="mb-6 bg-gray-700 p-4 rounded-lg border border-gray-600 overflow-y-auto max-h-[200px]">
+              <p><span className="font-semibold text-gray-300">Name:</span> {selectedUser.name}</p>
+              <p><span className="font-semibold text-gray-300">Email:</span> {selectedUser.email}</p>
+              <p><span className="font-semibold text-gray-300">Password:</span> {selectedUser.password}</p>
+              <p><span className="font-semibold text-gray-300">Total Orders:</span> {selectedUser.orders.length}</p>
+            </div>
 
-      {/* Orders (Scrollable with max height) */}
-      <h4 className="text-xl font-bold text-yellow-400 mb-3">Orders:</h4>
-      <div className="max-h-[300px] overflow-y-auto mb-6">
-        {selectedUser.orders.length > 0 ? (
-          <div className="space-y-4">
-            {selectedUser.orders.map((order, idx) => (
-              <div key={idx} className="bg-gray-700 rounded-lg p-4 text-white border border-gray-600">
-                <h4 className="text-lg font-semibold text-red-300">{order.name}</h4>
-                <p>Price: ${order.price}</p>
-                <p>Quantity: {order.quantity || 1}</p>
-                <p>Payment Method: {order.paymentMethod}</p>
-                <p>Address: {order.address}</p>
-                <p className="text-green-400">Delivery by: {order.deliveryDate}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-400">No orders placed by this user.</p>
-        )}
-      </div>
-
-      {/* Cart Items (Scrollable with max height) */}
-      <h4 className="text-xl font-bold text-blue-400 mt-6 mb-3">Cart Items:</h4>
-      <div className="max-h-[300px] overflow-y-auto">
-        {selectedUser.cart && selectedUser.cart.length > 0 ? (
-          <div className="space-y-4">
-            {selectedUser.cart.map((item, idx) => (
-              <div key={idx} className="bg-gray-700 rounded-lg p-4 text-white border border-gray-600">
-                <div className="flex items-center">
-                  {item.image && (
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-16 h-16 mr-4 object-cover rounded-md"
-                    />
-                  )}
-                  <div>
-                    <h4 className="text-lg font-semibold text-blue-300">{item.name}</h4>
-                    <p>Price: ${item.price}</p>
-                    <p>Quantity: {item.quantity || 1}</p>
-                    <p>Color: {item.color}</p>
-                    <p>Brand: {item.brand}</p>
-                  </div>
+            {/* Orders (Scrollable with max height) */}
+            <h4 className="text-xl font-bold text-yellow-400 mb-3">Orders:</h4>
+            <div className="max-h-[300px] overflow-y-auto mb-6">
+              {selectedUser.orders.length > 0 ? (
+                <div className="space-y-4">
+                  {selectedUser.orders.map((order, idx) => (
+                    <div key={idx} className="bg-gray-700 rounded-lg p-4 text-white border border-gray-600">
+                      <h4 className="text-lg font-semibold text-red-300">{order.name}</h4>
+                      <p>Price: ${order.price}</p>
+                      <p>Quantity: {order.quantity || 1}</p>
+                      <p>Payment Method: {order.paymentMethod}</p>
+                      <p>Address: {order.address}</p>
+                      <p className="text-green-400">Delivery by: {order.deliveryDate}</p>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            ))}
+              ) : (
+                <p className="text-gray-400">No orders placed by this user.</p>
+              )}
+            </div>
+
+            {/* Cart Items (Scrollable with max height) */}
+            <h4 className="text-xl font-bold text-blue-400 mt-6 mb-3">Cart Items:</h4>
+            <div className="max-h-[300px] overflow-y-auto">
+              {selectedUser.cart && selectedUser.cart.length > 0 ? (
+                <div className="space-y-4">
+                  {selectedUser.cart.map((item, idx) => (
+                    <div key={idx} className="bg-gray-700 rounded-lg p-4 text-white border border-gray-600">
+                      <div className="flex items-center">
+                        {item.image && (
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-16 h-16 mr-4 object-cover rounded-md"
+                          />
+                        )}
+                        <div>
+                          <h4 className="text-lg font-semibold text-blue-300">{item.name}</h4>
+                          <p>Price: ${item.price}</p>
+                          <p>Quantity: {item.quantity || 1}</p>
+                          <p>Color: {item.color}</p>
+                          <p>Brand: {item.brand}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-400">No items in cart.</p>
+              )}
+            </div>
           </div>
-        ) : (
-          <p className="text-gray-400">No items in cart.</p>
-        )}
-      </div>
+        </div>
+      )}
     </div>
-  </div>
-)}
-
-
-
     </div>
   );
 };

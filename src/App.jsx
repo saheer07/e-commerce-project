@@ -11,11 +11,11 @@ import Payment from './pages/Payment';
 import ProductDetails from './pages/ProductDetails';
 import AdminDashboard from './AdminPanel/AdminDashboard';
 import ProductManagement from './AdminPanel/ProductManagement';
-import OrderManagement from './AdminPanel/OrderManagement';
 import UserManagement from './AdminPanel/UserManagement';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './context/AuthContext';
+import TrashbinManagement from './AdminPanel/TrashbinManagement';
 
 // ✅ Admin route wrapper
 const AdminRoute = ({ children }) => {
@@ -67,10 +67,10 @@ const App = () => {
           }
         />
         <Route
-          path="/admin/orders"
+          path="/admin/trashbin"
           element={
             <AdminRoute>
-              <OrderManagement />
+            <TrashbinManagement />
             </AdminRoute>
           }
         />

@@ -1,4 +1,5 @@
 {
+  "deletedProducts": [],
   "carts": [
     {
       "id": "1",
@@ -91,29 +92,6 @@
       ]
     },
     {
-      "id": "2",
-      "name": "XXR Model 575 Wheels",
-      "price": 249.99,
-      "category": "Hatchback",
-      "brand": "WheelTech",
-      "color": "Phantom Black",
-      "material": "Aluminum Alloy",
-      "stock": 13,
-      "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTn0Aaig8yXCYCh5iTKA4ZRb5L8_sBFRds-G6kpk_hqIt5UzvS_pEe-L-i1X6SQmswlmpjWSI5qACbEbE4dlqmW5pstfZ15VElwYA1ugNU",
-      "reviews": [
-        {
-          "user": "Anu R.",
-          "rating": 4,
-          "comment": "Great product, loved the color and finish."
-        },
-        {
-          "user": "Raj K.",
-          "rating": 5,
-          "comment": "Perfect fit for my car, great design."
-        }
-      ]
-    },
-    {
       "id": "3",
       "name": "Fuel D827 Traction 1pc Custom",
       "price": 449.99,
@@ -147,27 +125,12 @@
       ]
     },
     {
-      "id": "4",
       "name": "Alloy Wheel Grey",
       "price": 329.99,
-      "category": "Hatchback",
-      "brand": "WheelMaster",
-      "color": "Ertiga",
-      "material": "Aluminum Alloy",
       "stock": 12,
+      "category": "Hatchback",
       "image": "https://images-cdn.ubuy.co.in/6414086e0afdf436541a2c96-momo-wrva60539fi6-6x15-et39-4x98-alloy.jpg",
-      "reviews": [
-        {
-          "user": "Amit J.",
-          "rating": 5,
-          "comment": "Solid build and very stylish, great value."
-        },
-        {
-          "user": "Priya L.",
-          "rating": 4,
-          "comment": "Look great, but a little too heavy for my taste."
-        }
-      ]
+      "id": "4"
     },
     {
       "id": "5",
@@ -218,15 +181,6 @@
       "image": "https://image.made-in-china.com/2f0j00FBMVqivPkAgu/Forging-Car-Wheel-Aluminum-Wheel-17-prime-prime-18-prime-prime-19-prime-prime-PCD-5X114-3-6X139-7.webp"
     },
     {
-      "id": "b478",
-      "name": "Hote off Road Alloy Wheels",
-      "price": 313,
-      "stock": 5,
-      "category": "SUV",
-      "description": "",
-      "image": "https://s.alicdn.com/@sc04/kf/H1562a7f96f1148f8a32b7fc949293a1a6.jpg_720x720q50.jpg"
-    },
-    {
       "id": "6ef7",
       "name": "CUSTOM 2 PIECE FORGED BIG LIP WHEELS",
       "price": 279,
@@ -236,14 +190,36 @@
       "image": "https://rvrnwheel.com/cdn/shop/files/T081-Black-Chrome-Deep-dish-corvette-truck-wheels-custom-forged-2pc-rvrn-forged-rims.png?v=1740465989"
     },
     {
-      "id": "7750",
-      "name": "ION Alloy 174 Gloss Black Machined Lip",
-      "price": 247,
+      "id": "2",
+      "name": "XXR Model 575 Wheels",
+      "price": 249.99,
+      "category": "Hatchback",
+      "brand": "WheelTech",
+      "color": "Phantom Black",
+      "material": "Aluminum Alloy",
+      "stock": 13,
+      "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTn0Aaig8yXCYCh5iTKA4ZRb5L8_sBFRds-G6kpk_hqIt5UzvS_pEe-L-i1X6SQmswlmpjWSI5qACbEbE4dlqmW5pstfZ15VElwYA1ugNU",
+      "reviews": [
+        {
+          "user": "Anu R.",
+          "rating": 4,
+          "comment": "Great product, loved the color and finish."
+        },
+        {
+          "user": "Raj K.",
+          "rating": 5,
+          "comment": "Perfect fit for my car, great design."
+        }
+      ]
+    },
+    {
+      "id": "b478",
+      "name": "Hote off Road Alloy Wheels",
+      "price": 313,
       "stock": 5,
       "category": "SUV",
       "description": "",
-      "image": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQwQ8uvuQXuhxDsTcoBrYj2NcCc9PFTOtlrSODoIoRvPvGy1jDQTeCUiu4glvwbQBGdEOVUCi4-fxY95UxN6AjznK-rO3zwUrZT1ZhYOd_Dk2ErSRH9Ffj3eQ",
-      "reviews": []
+      "image": "https://s.alicdn.com/@sc04/kf/H1562a7f96f1148f8a32b7fc949293a1a6.jpg_720x720q50.jpg"
     }
   ],
   "orders": [

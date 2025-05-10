@@ -6,8 +6,9 @@ import {
   ClipboardList,
   Users,
   Menu,
-  X
-} from "lucide-react";
+  X,
+  Home
+} from "lucide-react"; // Imported Home icon
 
 const AdminNavbar = () => {
   const location = useLocation();
@@ -43,6 +44,13 @@ const AdminNavbar = () => {
         </h2>
         <div className="flex flex-col space-y-3">
           <Link
+            to="/"
+            className={linkClasses("/")}
+            onClick={() => setIsOpen(false)}
+          >
+            <Home size={20} /> Home
+          </Link>
+          <Link
             to="/admin-dashboard"
             className={linkClasses("/admin-dashboard")}
             onClick={() => setIsOpen(false)}
@@ -57,11 +65,11 @@ const AdminNavbar = () => {
             <Package size={20} /> Manage Products
           </Link>
           <Link
-            to="/admin/orders"
-            className={linkClasses("/admin/orders")}
+            to="/admin/trashbin"
+            className={linkClasses("/admin/trashbin")}
             onClick={() => setIsOpen(false)}
           >
-            <ClipboardList size={20} /> Manage Orders
+            <ClipboardList size={20} /> Manage Trashbin
           </Link>
           <Link
             to="/admin/users"

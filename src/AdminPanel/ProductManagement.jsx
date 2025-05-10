@@ -15,7 +15,7 @@ function ProductManagement() {
   });
 
   const [products, setProducts] = useState([]);
-  const [editing, setEditing] = useState(false); // To track if we're in edit mode
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     fetchProducts();
@@ -50,21 +50,26 @@ function ProductManagement() {
     e.preventDefault();
 
     const newProduct = {
-      ...formData,
+      name: formData.name,
       price: parseFloat(formData.price),
       stock: parseInt(formData.stock),
+      category: formData.category,
+      description: formData.description,
+      image: formData.image,
     };
 
     try {
       if (editing) {
-        // Edit existing product
-        await axios.put(`http://localhost:3001/products/${formData.id}`, newProduct);
+        await axios.put(`http://localhost:3001/products/${formData.id}`, {
+          ...newProduct,
+          id: formData.id, // Retain id while editing
+        });
         toast.success('Product updated successfully');
       } else {
-        // Add new product
-        await axios.post('http://localhost:3001/products', newProduct);
+        await axios.post('http://localhost:3001/products', newProduct); // Don’t include id when adding
         toast.success('Product added successfully');
       }
+
       setFormData({
         id: '',
         name: '',
@@ -74,46 +79,51 @@ function ProductManagement() {
         description: '',
         image: '',
       });
+
       fetchProducts();
-      setEditing(false); // Reset edit mode
+      setEditing(false);
     } catch (error) {
       console.error('Failed to save product:', error);
       toast.error('Failed to save product');
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleSoftDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/products/${id}`);
-      toast.success('Product deleted');
-      fetchProducts();
+      const productToDelete = products.find((product) => product.id === id);
+      if (productToDelete) {
+        await axios.post('http://localhost:3001/deletedProducts', productToDelete);
+        await axios.delete(`http://localhost:3001/products/${id}`);
+        toast.success('Product moved to trash');
+        fetchProducts();
+      } else {
+        toast.error('Product not found');
+      }
     } catch (error) {
+      console.error('Failed to delete:', error);
       toast.error('Failed to delete');
     }
   };
 
   const handleEdit = (product) => {
     setFormData({ ...product });
-    setEditing(true); // Switch to edit mode
+    setEditing(true);
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-b from-black to-gray-900 text-white">
-      {/* Sidebar */}
-      <div className="hidden md:block w-64">
-        <AdminNavbar />
-      </div>
+    <div className="admin-products bg-gradient-to-b from-black to-gray-900 text-white min-h-screen p-6 flex flex-col md:flex-row">
+      <AdminNavbar />
 
-      {/* Main Content */}
-      <div className="flex-1 p-6 md:ml-20">
-        <h2 className="text-3xl font-bold text-red-500 mb-6 text-center">{editing ? 'Edit Product' : 'Product Management'}</h2>
+      <div className="w-full md:w-3/4 md:pl-8">
+        <h2 className="text-3xl font-bold text-red-500 mb-6 text-center">
+          {editing ? 'Edit Product' : 'Product Management'}
+        </h2>
 
-        {/* Add or Edit Product Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-3xl mx-auto"
+          className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-3xl mx-auto w-full"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
               type="text"
               name="name"
@@ -190,16 +200,15 @@ function ProductManagement() {
           </button>
         </form>
 
-        {/* Product List */}
-        <div className="mt-12 max-w-6xl mx-auto">
+        <div className="mt-12 max-w-6xl mx-auto w-full">
           <h3 className="text-2xl font-bold text-red-400 mb-4 text-center">Existing Products</h3>
           {products.length === 0 ? (
             <p className="text-center">No products found.</p>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {products.map((product) => (
+            <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {products.map((product, index) => (
                 <div
-                  key={product.id}
+                  key={product.id || `${product.name}-${index}`}
                   className="bg-gray-800 border border-gray-600 p-4 rounded-xl shadow"
                 >
                   <img
@@ -213,10 +222,10 @@ function ProductManagement() {
                   <p className="text-gray-400 text-sm mb-2">Category: {product.category}</p>
                   <div className="flex gap-2 justify-center">
                     <button
-                      onClick={() => handleDelete(product.id)}
+                      onClick={() => handleSoftDelete(product.id)}
                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
                     >
-                      Delete
+                      Move to Trash
                     </button>
                     <button
                       onClick={() => handleEdit(product)}
