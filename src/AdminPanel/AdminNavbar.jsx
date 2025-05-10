@@ -9,6 +9,7 @@ import {
   X,
   Home
 } from "lucide-react"; // Imported Home icon
+import { FaTrashRestore } from "react-icons/fa";
 
 const AdminNavbar = () => {
   const location = useLocation();
@@ -69,7 +70,7 @@ const AdminNavbar = () => {
             className={linkClasses("/admin/trashbin")}
             onClick={() => setIsOpen(false)}
           >
-            <ClipboardList size={20} /> Manage Trashbin
+            <FaTrashRestore  size={20} /> Manage Trashbin
           </Link>
           <Link
             to="/admin/users"

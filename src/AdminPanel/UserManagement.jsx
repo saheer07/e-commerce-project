@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import AdminNavbar from "./AdminNavbar";
+import { FaUsersGear } from "react-icons/fa6";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -72,7 +73,7 @@ const UserManagement = () => {
     <div className="w-full md:w-3/4 md:pl-8">
       {/* Sidebar */}
      
-      <h2 className="text-4xl font-bold text-red-400 text-center mb-8">👥 User Management</h2>
+      <h2 className="text-4xl font-bold text-red-400 text-center mb-8"><FaUsersGear /> User Management</h2>
 
       {currentUser && users.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

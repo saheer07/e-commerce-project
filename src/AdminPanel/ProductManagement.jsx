@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import AdminNavbar from './AdminNavbar';
+import { AiOutlineProduct } from "react-icons/ai";
+import { FaAlignLeft } from "react-icons/fa6";
 
 function ProductManagement() {
   const [formData, setFormData] = useState({
@@ -116,7 +118,7 @@ function ProductManagement() {
 
       <div className="w-full md:w-3/4 md:pl-8">
         <h2 className="text-3xl font-bold text-red-500 mb-6 text-center">
-          {editing ? 'Edit Product' : 'Product Management'}
+        <AiOutlineProduct /> {editing ? 'Edit Product' : 'Product Management'}
         </h2>
 
         <form

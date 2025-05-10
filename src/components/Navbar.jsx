@@ -9,7 +9,6 @@ import { GiCarWheel } from "react-icons/gi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 
-
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState(null);
@@ -49,7 +48,7 @@ function Navbar() {
   // Handle Search
   const handleSearch = () => {
     if (searchTerm.trim() !== '') {
-      navigate(`/products?search=${encodeURIComponent(searchTerm)}`);
+      navigate(`/products?search=${encodeURIComponent(searchTerm)}`, { replace: true });
       setSearchTerm('');  // Clear search bar after search
     }
   };
@@ -86,7 +85,7 @@ function Navbar() {
                 type="text"
                 placeholder="Search for wheels..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)} // Handle input change
                 onKeyPress={handleKeyPress}
                 className="w-full bg-black text-white placeholder-gray-400 py-2 focus:outline-none"
               />

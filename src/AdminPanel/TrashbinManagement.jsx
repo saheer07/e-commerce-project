@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import AdminNavbar from './AdminNavbar';
+import { FaTrashCanArrowUp } from "react-icons/fa6";
 
 function TrashbinManagement() {
   const [deletedProducts, setDeletedProducts] = useState([]);
@@ -51,7 +52,7 @@ function TrashbinManagement() {
     <div className="admin-products bg-gradient-to-b from-black to-gray-900 text-white min-h-screen p-6 flex flex-col md:flex-row">
       <AdminNavbar />
       <div className="w-full md:w-3/4 md:pl-8">
-        <h2 className="text-3xl font-bold text-red-500 mb-6 text-center">Trashbin Management</h2>
+        <h2 className="text-3xl font-bold text-red-500 mb-6 text-center"> <FaTrashCanArrowUp /> Trashbin Management</h2>
         {deletedProducts.length === 0 ? (
           <p className="text-center">No products in trash.</p>
         ) : (

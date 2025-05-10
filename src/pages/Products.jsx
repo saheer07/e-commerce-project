@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOrder, setSortOrder] = useState('asc');
   const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const searchQuery = params.get('search') || '';
-    setSearchTerm(searchQuery);
-  }, [location]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -95,12 +88,20 @@ const Products = () => {
     setSelectedCategory(e.target.value);
   };
 
-  const filteredProducts = products.filter((product) => {
-    return (
-      (selectedCategory === 'All' || product.category === selectedCategory) &&
-      (product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value);
+  };
+
+  // Filter by category
+  const filteredProducts = products.filter((product) =>
+    selectedCategory === 'All' || product.category === selectedCategory
+  );
+
+  // Sort by price safely using parseFloat
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const priceA = parseFloat(a.price) || 0;
+    const priceB = parseFloat(b.price) || 0;
+    return sortOrder === 'asc' ? priceA - priceB : priceB - priceA;
   });
 
   if (loading) {
@@ -116,11 +117,11 @@ const Products = () => {
       <h2 className="text-3xl font-bold text-center text-red-500 mb-6">Alloy Wheels</h2>
 
       {/* Category Filter */}
-      <div className="flex justify-center mb-8">
+      <div className="flex justify-center mb-6">
         <select
           value={selectedCategory}
           onChange={handleCategoryChange}
-          className="bg-black text-red-500 font-bold px-4 py-2 rounded border border-gray-600 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
+          className="bg-black text-red-500 font-bold px-4 py-2 rounded border border-gray-600 w-full max-w-xs"
         >
           <option value="All">All Categories</option>
           <option value="Hatchback">For Hatchbacks</option>
@@ -130,12 +131,24 @@ const Products = () => {
         </select>
       </div>
 
+      {/* Sort by Price */}
+      <div className="flex justify-center mb-8">
+        <select
+          value={sortOrder}
+          onChange={handleSortChange}
+          className="bg-black text-red-500 font-bold px-4 py-2 rounded border border-gray-600 w-full max-w-xs"
+        >
+          <option value="asc">Price: Low to High</option>
+          <option value="desc">Price: High to Low</option>
+        </select>
+      </div>
+
       {/* Product Grid */}
-      {filteredProducts.length === 0 ? (
+      {sortedProducts.length === 0 ? (
         <p className="text-center text-gray-400">No products available.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
+          {sortedProducts.map((product) => (
             <div
               key={product.id}
               className="bg-black border border-gray-700 rounded-xl p-4 shadow-lg hover:shadow-red-600 transition duration-300"
@@ -154,7 +167,9 @@ const Products = () => {
               >
                 {product.name}
               </h3>
-              <p className="text-gray-300 mb-1">Price: ${product.price?.toFixed(2) || 'N/A'}</p>
+              <p className="text-gray-300 mb-1">
+                Price: ${parseFloat(product.price)?.toFixed(2) || 'N/A'}
+              </p>
 
               <div className="flex flex-col sm:flex-row sm:justify-between gap-2">
                 <button

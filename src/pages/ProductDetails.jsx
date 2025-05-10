@@ -5,6 +5,8 @@ import { FaStar } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import StarRating from './StarRating';
 import ReviewItem from './ReviewItem';
+import { TiShoppingCart } from "react-icons/ti";
+import { MdOutlineRateReview } from "react-icons/md";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -188,7 +190,7 @@ const ProductDetails = () => {
             onClick={() => handleAddToCart(product)}
             className="bg-white text-black hover:bg-red-500 hover:text-white px-4 py-2 rounded flex items-center gap-2"
           >
-            <FaStar /> Add to Cart
+          <TiShoppingCart /> Add to Cart
           </button>
         </div>
 
@@ -229,7 +231,7 @@ const ProductDetails = () => {
               submitting ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
-            <FaStar /> {submitting ? 'Submitting...' : 'Submit Review'}
+            <MdOutlineRateReview /> {submitting ? 'Submitting...' : 'Submit Review'}
           </button>
         </div>
       </div>

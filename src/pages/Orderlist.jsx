@@ -41,11 +41,26 @@ const Orderlist = () => {
         status: "Cancelled"
       };
 
+      // Step 1: Update cancelled order in the 'cancelledOrders' table
       axios.post("http://localhost:3001/cancelledOrders", cancelledOrder)
         .then(() => {
+          // Step 2: Delete the order from the 'orders' table
           return axios.delete(`http://localhost:3001/orders/${orderToCancel.id}`);
         })
         .then(() => {
+          // Step 3: Update the stock of the product in the database
+          return axios.get(`http://localhost:3001/products/${orderToCancel.id}`);
+        })
+        .then((response) => {
+          const product = response.data;
+          const updatedStock = product.stock + orderToCancel.quantity;  // Add the quantity back to the stock
+          return axios.put(`http://localhost:3001/products/${product.id}`, {
+            ...product,
+            stock: updatedStock
+          });
+        })
+        .then(() => {
+          // Step 4: Remove the order from the local state
           setOrders(prev => prev.filter((_, i) => i !== cancelIndex));
           setShowCancelModal(false);
           setCancelReason("");
@@ -65,7 +80,7 @@ const Orderlist = () => {
 
   if (orders.length === 0) {
     return (
-      <div className="bg-black text-white min-h-screen p-6 text-center flex flex-col items-center justify-center">
+      <div className="bg-gray-950 text-white min-h-screen p-6 text-center flex flex-col items-center justify-center">
         <img
           src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
           alt="No Orders"
@@ -87,7 +102,7 @@ const Orderlist = () => {
     <div className="bg-gray-950 min-h-screen p-6 text-white">
       <h2 className="text-4xl font-bold text-red-500 text-center mb-10">📦 My Orders</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className=" bg-gray-950 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {orders.map((order, index) => (
           <div
             key={order.id}
@@ -113,7 +128,7 @@ const Orderlist = () => {
 
       {/* Order Details Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-gray-950 bg-opacity-70 flex items-center justify-center z-50">
           <div className="bg-gray-800 text-white rounded-xl p-6 w-full max-w-lg relative">
             <button
               onClick={() => setSelectedOrder(null)}

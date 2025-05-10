@@ -65,158 +65,87 @@
       "email": "saheerop@gmail.com",
       "password": "op12345",
       "isBlocked": false
+    },
+    {
+      "id": "ce01",
+      "name": "msc",
+      "email": "msc@gmail.com",
+      "password": "msc12345"
     }
   ],
   "products": [
     {
-      "id": "1",
       "name": "XXR Model 571 Wheels",
       "price": 22.804,
-      "category": "Hatchback",
-      "brand": "AutoMax",
-      "color": "Black",
-      "material": "Aluminum Alloy",
       "stock": 10,
+      "category": "Hatchback",
       "image": "https://images-cdn.ubuy.co.in/6719be5ee7377820987b7416-xxr-571-18x8-5-5x114-3-35et-chromium.jpg",
-      "reviews": [
-        {
-          "user": "Vishnu P.",
-          "rating": 5,
-          "comment": "Perfect upgrade for my car. High-quality and durable."
-        },
-        {
-          "user": "Shyam M.",
-          "rating": 4,
-          "comment": "Good quality wheels, slightly expensive though."
-        }
-      ]
+      "id": "1"
     },
     {
-      "id": "3",
       "name": "Fuel D827 Traction 1pc Custom",
       "price": 449.99,
+      "stock": 15,
       "category": "Truck",
-      "brand": "SpeedRim",
-      "color": "Dark Blue With Black Ring Rim",
-      "material": "Aluminum Alloy",
-      "stock": 5,
       "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTubp9smMHtEpEqx5XpsqRcI-wyg1CCNRx7_fjr74GXe6QNxUkchvIn2QX4XOhPRKLuEUL4USW6wEj928ArBo9ELwAI6UQLsGgCzHnnphW2nqfJdyimm_xi",
-      "reviews": [
-        {
-          "user": "Deepak A.",
-          "rating": 5,
-          "comment": "Love the bold look! Totally worth the price."
-        },
-        {
-          "user": "Neha S.",
-          "rating": 4,
-          "comment": "Expensive but looks stunning on my SUV."
-        },
-        {
-          "user": "saheerob",
-          "rating": 5,
-          "comment": "er"
-        },
-        {
-          "user": "saheerob",
-          "rating": 5,
-          "comment": "d"
-        }
-      ]
+      "id": "3"
     },
     {
       "name": "Alloy Wheel Grey",
       "price": 329.99,
-      "stock": 12,
+      "stock": 11,
       "category": "Hatchback",
       "image": "https://images-cdn.ubuy.co.in/6414086e0afdf436541a2c96-momo-wrva60539fi6-6x15-et39-4x98-alloy.jpg",
       "id": "4"
     },
     {
-      "id": "5",
       "name": "Alloy Wheels - 15 inch",
       "price": 199.99,
+      "stock": 15,
       "category": "Hatchback",
-      "brand": "AutoMax",
-      "color": "Silver",
-      "material": "Aluminum Alloy",
-      "stock": 20,
       "image": "https://images-cdn.ubuy.com.sa/64719e9413d24864b120b89e-strada-coda-custom-wheel-24x10-14.jpg",
-      "reviews": [
-        {
-          "user": "Ravi K.",
-          "rating": 5,
-          "comment": "Perfect for compact cars, good quality."
-        },
-        {
-          "user": "Kiran P.",
-          "rating": 3,
-          "comment": "Decent, but the finish could be better."
-        }
-      ]
+      "id": "5"
     },
     {
-      "id": "19dc",
       "name": "Alloy Wheel Diamond Cut",
       "price": 289,
-      "stock": 10,
+      "stock": 15,
       "category": "Sedan",
       "description": "",
       "image": "https://5.imimg.com/data5/SELLER/Default/2024/5/422491835/TL/WO/OS/220106875/s-presso-diamond-cut-alloy-wheel.jpg",
-      "reviews": [
-        {
-          "user": "saheer",
-          "rating": 5,
-          "comment": "dcvd"
-        }
-      ]
+      "id": "19dc"
     },
     {
-      "id": "f846",
       "name": "Forging Car Wheel Aluminum",
       "price": 300,
-      "stock": 5,
+      "stock": 9,
       "category": "SUV",
       "description": "",
-      "image": "https://image.made-in-china.com/2f0j00FBMVqivPkAgu/Forging-Car-Wheel-Aluminum-Wheel-17-prime-prime-18-prime-prime-19-prime-prime-PCD-5X114-3-6X139-7.webp"
+      "image": "https://image.made-in-china.com/2f0j00FBMVqivPkAgu/Forging-Car-Wheel-Aluminum-Wheel-17-prime-prime-18-prime-prime-19-prime-prime-PCD-5X114-3-6X139-7.webp",
+      "id": "f846"
     },
     {
-      "id": "6ef7",
       "name": "CUSTOM 2 PIECE FORGED BIG LIP WHEELS",
       "price": 279,
-      "stock": 8,
+      "stock": 10,
       "category": "SUV",
       "description": "",
-      "image": "https://rvrnwheel.com/cdn/shop/files/T081-Black-Chrome-Deep-dish-corvette-truck-wheels-custom-forged-2pc-rvrn-forged-rims.png?v=1740465989"
+      "image": "https://rvrnwheel.com/cdn/shop/files/T081-Black-Chrome-Deep-dish-corvette-truck-wheels-custom-forged-2pc-rvrn-forged-rims.png?v=1740465989",
+      "id": "6ef7"
     },
     {
-      "id": "2",
       "name": "XXR Model 575 Wheels",
       "price": 249.99,
+      "stock": 10,
       "category": "Hatchback",
-      "brand": "WheelTech",
-      "color": "Phantom Black",
-      "material": "Aluminum Alloy",
-      "stock": 13,
       "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTn0Aaig8yXCYCh5iTKA4ZRb5L8_sBFRds-G6kpk_hqIt5UzvS_pEe-L-i1X6SQmswlmpjWSI5qACbEbE4dlqmW5pstfZ15VElwYA1ugNU",
-      "reviews": [
-        {
-          "user": "Anu R.",
-          "rating": 4,
-          "comment": "Great product, loved the color and finish."
-        },
-        {
-          "user": "Raj K.",
-          "rating": 5,
-          "comment": "Perfect fit for my car, great design."
-        }
-      ]
+      "id": "2"
     },
     {
       "id": "b478",
       "name": "Hote off Road Alloy Wheels",
       "price": 313,
-      "stock": 5,
+      "stock": 7,
       "category": "SUV",
       "description": "",
       "image": "https://s.alicdn.com/@sc04/kf/H1562a7f96f1148f8a32b7fc949293a1a6.jpg_720x720q50.jpg"
@@ -224,35 +153,56 @@
   ],
   "orders": [
     {
-      "id": "2",
-      "name": "XXR Model 575 Wheels",
-      "price": 249.99,
+      "id": "4",
+      "name": "Alloy Wheel Grey",
+      "price": 329.99,
+      "stock": 12,
       "category": "Hatchback",
-      "brand": "WheelTech",
-      "color": "Phantom Black",
-      "material": "Aluminum Alloy",
-      "stock": 13,
-      "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTn0Aaig8yXCYCh5iTKA4ZRb5L8_sBFRds-G6kpk_hqIt5UzvS_pEe-L-i1X6SQmswlmpjWSI5qACbEbE4dlqmW5pstfZ15VElwYA1ugNU",
-      "reviews": [
-        {
-          "user": "Anu R.",
-          "rating": 4,
-          "comment": "Great product, loved the color and finish."
-        },
-        {
-          "user": "Raj K.",
-          "rating": 5,
-          "comment": "Perfect fit for my car, great design."
-        }
-      ],
+      "image": "https://images-cdn.ubuy.co.in/6414086e0afdf436541a2c96-momo-wrva60539fi6-6x15-et39-4x98-alloy.jpg",
       "quantity": 1,
-      "address": "erefeeefef",
+      "address": "tytyty",
       "paymentMethod": "COD",
       "cardDetails": null,
       "deliveryCharge": 40,
-      "total": 289.99,
-      "purchasedAt": "2025-05-09T09:46:25.156Z",
-      "deliveryDate": "12/05/2025 - 14/05/2025",
+      "total": 369.99,
+      "purchasedAt": "2025-05-10T14:48:33.516Z",
+      "deliveryDate": "13/05/2025 - 15/05/2025",
+      "email": "admin@gmail.com",
+      "status": "Ordered"
+    },
+    {
+      "id": "3",
+      "name": "Fuel D827 Traction 1pc Custom",
+      "price": 449.99,
+      "stock": 18,
+      "category": "Truck",
+      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTubp9smMHtEpEqx5XpsqRcI-wyg1CCNRx7_fjr74GXe6QNxUkchvIn2QX4XOhPRKLuEUL4USW6wEj928ArBo9ELwAI6UQLsGgCzHnnphW2nqfJdyimm_xi",
+      "quantity": 1,
+      "address": "yjhhn",
+      "paymentMethod": "COD",
+      "cardDetails": null,
+      "deliveryCharge": 40,
+      "total": 489.99,
+      "purchasedAt": "2025-05-10T15:01:17.100Z",
+      "deliveryDate": "13/05/2025 - 15/05/2025",
+      "email": "admin@gmail.com",
+      "status": "Ordered"
+    },
+    {
+      "id": "3",
+      "name": "Fuel D827 Traction 1pc Custom",
+      "price": 449.99,
+      "stock": 16,
+      "category": "Truck",
+      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTubp9smMHtEpEqx5XpsqRcI-wyg1CCNRx7_fjr74GXe6QNxUkchvIn2QX4XOhPRKLuEUL4USW6wEj928ArBo9ELwAI6UQLsGgCzHnnphW2nqfJdyimm_xi",
+      "quantity": 1,
+      "address": "u6uy",
+      "paymentMethod": "COD",
+      "cardDetails": null,
+      "deliveryCharge": 40,
+      "total": 489.99,
+      "purchasedAt": "2025-05-10T15:06:55.262Z",
+      "deliveryDate": "13/05/2025 - 15/05/2025",
       "email": "admin@gmail.com",
       "status": "Ordered"
     }
@@ -1304,6 +1254,126 @@
       "status": "Cancelled",
       "cancelledAt": "2025-05-09T09:46:15.875Z",
       "cancelReason": "rtggg"
+    },
+    {
+      "id": "2",
+      "name": "XXR Model 575 Wheels",
+      "price": 249.99,
+      "category": "Hatchback",
+      "brand": "WheelTech",
+      "color": "Phantom Black",
+      "material": "Aluminum Alloy",
+      "stock": 13,
+      "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTn0Aaig8yXCYCh5iTKA4ZRb5L8_sBFRds-G6kpk_hqIt5UzvS_pEe-L-i1X6SQmswlmpjWSI5qACbEbE4dlqmW5pstfZ15VElwYA1ugNU",
+      "reviews": [
+        {
+          "user": "Anu R.",
+          "rating": 4,
+          "comment": "Great product, loved the color and finish."
+        },
+        {
+          "user": "Raj K.",
+          "rating": 5,
+          "comment": "Perfect fit for my car, great design."
+        }
+      ],
+      "quantity": 1,
+      "address": "erefeeefef",
+      "paymentMethod": "COD",
+      "cardDetails": null,
+      "deliveryCharge": 40,
+      "total": 289.99,
+      "purchasedAt": "2025-05-09T09:46:25.156Z",
+      "deliveryDate": "12/05/2025 - 14/05/2025",
+      "email": "admin@gmail.com",
+      "status": "Cancelled",
+      "cancelledAt": "2025-05-10T12:31:38.447Z",
+      "cancelReason": "uiio"
+    },
+    {
+      "id": "3",
+      "name": "Fuel D827 Traction 1pc Custom",
+      "price": 449.99,
+      "category": "Truck",
+      "brand": "SpeedRim",
+      "color": "Dark Blue With Black Ring Rim",
+      "material": "Aluminum Alloy",
+      "stock": 3,
+      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTubp9smMHtEpEqx5XpsqRcI-wyg1CCNRx7_fjr74GXe6QNxUkchvIn2QX4XOhPRKLuEUL4USW6wEj928ArBo9ELwAI6UQLsGgCzHnnphW2nqfJdyimm_xi",
+      "reviews": [
+        {
+          "user": "Deepak A.",
+          "rating": 5,
+          "comment": "Love the bold look! Totally worth the price."
+        },
+        {
+          "user": "Neha S.",
+          "rating": 4,
+          "comment": "Expensive but looks stunning on my SUV."
+        },
+        {
+          "user": "saheerob",
+          "rating": 5,
+          "comment": "er"
+        },
+        {
+          "user": "saheerob",
+          "rating": 5,
+          "comment": "d"
+        }
+      ],
+      "quantity": 1,
+      "address": "cdasfvf ",
+      "paymentMethod": "COD",
+      "cardDetails": null,
+      "deliveryCharge": 40,
+      "total": 489.99,
+      "purchasedAt": "2025-05-10T13:19:22.952Z",
+      "deliveryDate": "13/05/2025 - 15/05/2025",
+      "email": "admin@gmail.com",
+      "status": "Cancelled",
+      "cancelledAt": "2025-05-10T13:20:36.788Z",
+      "cancelReason": "dfvff"
+    },
+    {
+      "id": "3",
+      "name": "Fuel D827 Traction 1pc Custom",
+      "price": 449.99,
+      "stock": 20,
+      "category": "Truck",
+      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTubp9smMHtEpEqx5XpsqRcI-wyg1CCNRx7_fjr74GXe6QNxUkchvIn2QX4XOhPRKLuEUL4USW6wEj928ArBo9ELwAI6UQLsGgCzHnnphW2nqfJdyimm_xi",
+      "quantity": 1,
+      "address": "dff",
+      "paymentMethod": "COD",
+      "cardDetails": null,
+      "deliveryCharge": 40,
+      "total": 489.99,
+      "purchasedAt": "2025-05-10T13:20:20.580Z",
+      "deliveryDate": "13/05/2025 - 15/05/2025",
+      "email": "admin@gmail.com",
+      "status": "Cancelled",
+      "cancelledAt": "2025-05-10T13:21:02.548Z",
+      "cancelReason": "jkjjjk"
+    },
+    {
+      "id": "4",
+      "name": "Alloy Wheel Grey",
+      "price": 329.99,
+      "stock": 11,
+      "category": "Hatchback",
+      "image": "https://images-cdn.ubuy.co.in/6414086e0afdf436541a2c96-momo-wrva60539fi6-6x15-et39-4x98-alloy.jpg",
+      "quantity": 1,
+      "address": "jvgl,'\n",
+      "paymentMethod": "COD",
+      "cardDetails": null,
+      "deliveryCharge": 40,
+      "total": 369.99,
+      "purchasedAt": "2025-05-10T13:23:14.384Z",
+      "deliveryDate": "13/05/2025 - 15/05/2025",
+      "email": "admin@gmail.com",
+      "status": "Cancelled",
+      "cancelledAt": "2025-05-10T13:23:41.308Z",
+      "cancelReason": "  jm;'/"
     }
   ]
 }
