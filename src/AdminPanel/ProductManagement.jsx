@@ -14,6 +14,8 @@ function ProductManagement() {
     category: 'Hatchback',
     description: '',
     image: '',
+    brand: '',  // Brand as a text input now
+    color: '',  // Color remains as is
   });
 
   const [products, setProducts] = useState([]);
@@ -58,6 +60,8 @@ function ProductManagement() {
       category: formData.category,
       description: formData.description,
       image: formData.image,
+      brand: formData.brand,  // Keep brand as text
+      color: formData.color,  // Keep color as is
     };
 
     try {
@@ -80,6 +84,8 @@ function ProductManagement() {
         category: 'Hatchback',
         description: '',
         image: '',
+        brand: '',  // Reset brand
+        color: '',  // Reset color
       });
 
       fetchProducts();
@@ -164,6 +170,24 @@ function ProductManagement() {
               <option value="SUV">SUV</option>
               <option value="Truck">Truck</option>
             </select>
+
+            <input
+              type="text"
+              name="brand"
+              placeholder="Brand"
+              value={formData.brand}
+              onChange={handleChange}
+              className="p-2 rounded bg-gray-800 border border-gray-700"
+            />
+
+            <input
+              type="text"
+              name="color"
+              placeholder="Color"
+              value={formData.color}
+              onChange={handleChange}
+              className="p-2 rounded bg-gray-800 border border-gray-700"
+            />
           </div>
 
           <textarea
@@ -222,6 +246,8 @@ function ProductManagement() {
                   <p className="text-gray-300">Price: ${product.price}</p>
                   <p className="text-gray-300">Stock: {product.stock}</p>
                   <p className="text-gray-400 text-sm mb-2">Category: {product.category}</p>
+                  <p className="text-gray-400 text-sm mb-2">Brand: {product.brand}</p>
+                  <p className="text-gray-400 text-sm mb-2">Color: {product.color}</p>
                   <div className="flex gap-2 justify-center">
                     <button
                       onClick={() => handleSoftDelete(product.id)}

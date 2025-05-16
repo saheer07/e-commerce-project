@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 function ProductListingPage() {
   const [products, setProducts] = useState([]);
@@ -45,6 +46,7 @@ function ProductListingPage() {
           ))}
         </div>
       )}
+       <Footer />
     </div>
   );
 }

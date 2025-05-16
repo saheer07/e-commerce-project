@@ -7,6 +7,8 @@ import StarRating from './StarRating';
 import ReviewItem from './ReviewItem';
 import { TiShoppingCart } from "react-icons/ti";
 import { MdOutlineRateReview } from "react-icons/md";
+import Footer from '../components/Footer';
+import { IoCarSport } from "react-icons/io5";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -177,7 +179,7 @@ const ProductDetails = () => {
         <p className="text-lg text-gray-400 mb-2">🏷️ Brand: {product.brand}</p>
         <p className="text-lg text-gray-400 mb-2">🎨 Color: {product.color}</p>
         <p className="text-lg text-gray-400 mb-2">📦 Stock: {product.stock}</p>
-        <p className="text-lg text-gray-400 mb-2">🚗 Category: {product.category}</p>
+        <p className="text-lg text-gray-400 mb-2"><IoCarSport /> Category: {product.category}</p>
 
         <div className="mt-6 flex gap-4">
           <button
@@ -235,6 +237,7 @@ const ProductDetails = () => {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

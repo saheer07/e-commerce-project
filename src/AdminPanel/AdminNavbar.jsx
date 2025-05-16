@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Package,
-  ClipboardList,
   Users,
   Menu,
   X,
   Home
-} from "lucide-react"; // Imported Home icon
+} from "lucide-react";
 import { FaTrashRestore } from "react-icons/fa";
+import { LogOut } from "lucide-react"; // Logout icon
 
 const AdminNavbar = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // for redirecting after logout
   const [isOpen, setIsOpen] = useState(false);
 
   const isActive = (path) => location.pathname === path;
@@ -23,6 +24,13 @@ const AdminNavbar = () => {
         ? "bg-red-600 text-white shadow"
         : "bg-gray-900 text-red-400 hover:bg-gray-800 hover:text-white"
     }`;
+
+  // 🧠 Dummy logout handler
+  const handleLogout = () => {
+    // Example: Clear token, redirect, etc.
+    localStorage.removeItem("token"); // optional
+    navigate("/login"); // or wherever your login page is
+  };
 
   return (
     <>
@@ -43,12 +51,9 @@ const AdminNavbar = () => {
         <h2 className="text-2xl font-bold text-red-500 mb-6 text-center hidden md:block">
           Admin Panel
         </h2>
+
         <div className="flex flex-col space-y-3">
-          <Link
-            to="/"
-            className={linkClasses("/")}
-            onClick={() => setIsOpen(false)}
-          >
+          <Link to="/" className={linkClasses("/")} onClick={() => setIsOpen(false)}>
             <Home size={20} /> Home
           </Link>
           <Link
@@ -70,7 +75,7 @@ const AdminNavbar = () => {
             className={linkClasses("/admin/trashbin")}
             onClick={() => setIsOpen(false)}
           >
-            <FaTrashRestore  size={20} /> Manage Trashbin
+            <FaTrashRestore size={20} /> Manage Trashbin
           </Link>
           <Link
             to="/admin/users"
@@ -79,6 +84,16 @@ const AdminNavbar = () => {
           >
             <Users size={20} /> Manage Users
           </Link>
+        </div>
+
+        {/* 🚪 Logout button */}
+        <div className="mt-10 pt-6 border-t border-gray-700">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-gray-900 text-red-400 hover:bg-gray-800 hover:text-white transition duration-200"
+          >
+            <LogOut size={20} /> Logout
+          </button>
         </div>
       </nav>
     </>

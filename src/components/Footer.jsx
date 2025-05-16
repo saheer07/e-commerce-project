@@ -8,7 +8,7 @@ function Footer() {
         <div className="flex justify-center gap-6 mb-4">
           <a href="/about" className="hover:text-red-500 transition transform hover:scale-105">About Us</a>
           <a href="/contact" className="hover:text-red-500 transition transform hover:scale-105">Contact</a>
-          <a href="/privacy" className="hover:text-red-500 transition transform hover:scale-105">Privacy Policy</a>
+          <a href="/privacy-policy" className="hover:text-red-500 transition transform hover:scale-105">Privacy Policy</a>
           <a href="/terms" className="hover:text-red-500 transition transform hover:scale-105">Terms</a>
         </div>
 

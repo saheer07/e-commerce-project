@@ -1,23 +1,31 @@
 import React from 'react';
 import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Navbar from './components/Navbar';
+import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Orderlist from './pages/Orderlist';
-import Home from './pages/Home';
 import Login from './pages/UserRegistration/Login';
 import Signup from './pages/UserRegistration/Signup';
 import Products from './pages/Products';
 import Payment from './pages/Payment';
 import ProductDetails from './pages/ProductDetails';
+
 import AdminDashboard from './AdminPanel/AdminDashboard';
 import ProductManagement from './AdminPanel/ProductManagement';
 import UserManagement from './AdminPanel/UserManagement';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from './context/AuthContext';
 import TrashbinManagement from './AdminPanel/TrashbinManagement';
 
-// ✅ Admin route wrapper
+import About from './Footersection/About';
+import Contact from './Footersection/Contact';
+import PrivacyPolicy from './Footersection/PrivacyPolicy';
+import Terms from './Footersection/Terms';
+
+import { useAuth } from './context/AuthContext';
+
+// ✅ Admin route protection
 const AdminRoute = ({ children }) => {
   const { user } = useAuth();
   return user && user.isAdmin ? children : <Navigate to="/" replace />;
@@ -26,7 +34,7 @@ const AdminRoute = ({ children }) => {
 const App = () => {
   const location = useLocation();
 
-  // ❌ Hide navbar on these routes
+  // ❌ Hide navbar on login, signup, and admin pages
   const hideNavbar =
     location.pathname === '/login' ||
     location.pathname === '/signup' ||
@@ -37,7 +45,7 @@ const App = () => {
       {/* ✅ Conditional Navbar */}
       {!hideNavbar && <Navbar />}
 
-      {/* ✅ App Routes */}
+      {/* ✅ Application Routes */}
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
@@ -48,8 +56,12 @@ const App = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
 
-        {/* ✅ Admin Routes with Protection */}
+        {/* ✅ Protected Admin Routes */}
         <Route
           path="/admin-dashboard"
           element={
@@ -70,7 +82,7 @@ const App = () => {
           path="/admin/trashbin"
           element={
             <AdminRoute>
-            <TrashbinManagement />
+              <TrashbinManagement />
             </AdminRoute>
           }
         />
@@ -84,8 +96,8 @@ const App = () => {
         />
       </Routes>
 
-      {/* Toast notifications */}
-      <ToastContainer />
+      {/* ✅ Toast Notifications */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Footer from "../components/Footer";
 
 const Orderlist = () => {
   const [orders, setOrders] = useState(null);
@@ -216,6 +217,7 @@ const Orderlist = () => {
       >
         Shop Now
       </button>
+      <Footer />
     </div>
   );
 };
